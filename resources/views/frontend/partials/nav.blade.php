@@ -31,7 +31,7 @@
             </ul>
 
             <div class="">
-                <a href="auth-signin-basic.html" class="btn btn-soft-primary"><i class="ri-user-3-line align-bottom me-1"></i> Login & Register</a>
+                <a href="{{route('login')}}" class="btn btn-soft-primary"><i class="ri-user-3-line align-bottom me-1"></i> Login & Register</a>
             </div>
         </div>
 

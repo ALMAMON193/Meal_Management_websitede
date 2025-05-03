@@ -7,7 +7,7 @@ use App\Http\Controllers\Web\frontend\MarketItemController;
 
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('backend.layout.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -16,8 +16,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::post('/market-items', [MarketItemController::class, 'store'])->name('market-items.store');
 Route::get('/', [MarketItemController::class, 'index'])->name('home');
-Route::delete('/market-items/{marketItem}', [MarketItemController::class, 'destroy'])->name('market-items.destroy');
 
 require __DIR__.'/auth.php';

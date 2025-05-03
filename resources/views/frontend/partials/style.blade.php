@@ -13,4 +13,3 @@
 <link href="{{asset('frontend/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 <!-- custom Css-->
 <link href="{{asset('frontend/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
-
