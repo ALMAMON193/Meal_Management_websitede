@@ -1,639 +1,406 @@
 @extends('backend.app')
-@section('title', 'ড্যাশবোর্ড')
-
+@section('title', 'মিল ম্যানেজমেন্ট ড্যাশবোর্ড')
 @section('content')
-    <style>
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #4f46e5;
-            --success-color: #22c55e;
-            --info-color: #0ea5e9;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --light-color: #f9fafb;
-            --dark-color: #1e293b;
-        }
-
-        body {
-            background-color: #f1f5f9;
-            font-family: 'Hind Siliguri', sans-serif;
-        }
-
-        .card {
-            border: none;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-        }
-
-        .card-animate {
-            position: relative;
-        }
-
-        .card-animate::before {
-            content: '';
-            position: absolute;
-            height: 6px;
-            width: 100%;
-            top: 0;
-            left: 0;
-            background: linear-gradient(90deg, var(--primary-color), var(--info-color));
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .card-animate:hover::before {
-            transform: scaleX(1);
-        }
-
-        .avatar-sm {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            background-color: var(--light-color);
-            transition: transform 0.3s;
-        }
-
-        .card-animate:hover .avatar-sm {
-            transform: rotate(15deg);
-        }
-
-        .counter-value {
-            animation: fadeIn 1s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .btn {
-            border-radius: 8px;
-            padding: 10px 18px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-        }
-
-        .btn-soft-success {
-            background-color: rgba(34, 197, 94, 0.1);
-            color: var(--success-color);
-            border: none;
-        }
-
-        .btn-soft-success:hover {
-            background-color: rgba(34, 197, 94, 0.2);
-            color: var(--success-color);
-        }
-
-        .minimal-border {
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-        }
-
-        .material-shadow-none {
-            box-shadow: none !important;
-        }
-
-        .table {
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        .table thead th {
-            background-color: rgba(99, 102, 241, 0.05);
-            color: var(--dark-color);
-            font-weight: 600;
-            border-bottom: none;
-        }
-
-        .table td, .table th {
-            padding: 12px 16px;
-            vertical-align: middle;
-        }
-
-        .list-group-item {
-            border-left: none;
-            border-right: none;
-            padding: 12px 20px;
-        }
-
-        .list-group-item:first-child {
-            border-top: none;
-        }
-
-        .list-group-item:last-child {
-            border-bottom: none;
-        }
-
-        .card-header {
-            background-color: #fff;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 20px;
-        }
-
-        .badge {
-            padding: 6px 10px;
-            font-weight: 500;
-            border-radius: 6px;
-        }
-
-        .alert {
-            border-radius: 8px;
-            border: none;
-        }
-
-        .alert-info {
-            background-color: rgba(14, 165, 233, 0.1);
-            color: #0369a1;
-        }
-
-        /* Individual card styles */
-        .card-balance {
-            background: linear-gradient(45deg, #22c55e10, #22c55e20);
-        }
-
-        .card-deposit {
-            background: linear-gradient(45deg, #0ea5e910, #0ea5e920);
-        }
-
-        .card-meal {
-            background: linear-gradient(45deg, #6366f110, #6366f120);
-        }
-
-        .card-rate {
-            background: linear-gradient(45deg, #f59e0b10, #f59e0b20);
-        }
-
-        /* Interactive hover effects */
-        .member-card {
-            position: relative;
-            z-index: 1;
-        }
-
-        .member-card .card-header {
-            transition: background-color 0.3s;
-        }
-
-        .member-card:hover .card-header {
-            background-color: var(--light-color);
-        }
-
-        .member-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 0;
-            height: 100%;
-            background-color: rgba(99, 102, 241, 0.03);
-            z-index: -1;
-            transition: width 0.4s ease;
-        }
-
-        .member-card:hover::after {
-            width: 100%;
-            left: 0;
-            right: auto;
-        }
-
-        /* Personal Info Cards */
-        .bg-light {
-            background-color: #f8fafc !important;
-            transition: all 0.3s;
-        }
-
-        .card.bg-light:hover {
-            background-color: #f1f5f9 !important;
-            transform: translateY(-3px);
-        }
-    </style>
-    <div class="page-content">
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col">
-                    <div class="h-100">
-                        <div class="row mb-4 pb-1">
-                            <div class="col-12">
-                                <div class="d-flex align-items-lg-center flex-lg-row flex-column bg-white p-4 rounded-3 shadow-sm">
-                                    <div class="flex-grow-1">
-                                        <h4 class="fs-5 mb-1 d-flex align-items-center">
-                                            <i class="bx bx-sun text-warning me-2 fs-4"></i>
-                                            শুভ সকাল, আন্না!
-                                        </h4>
-                                        <p class="text-muted mb-0">আপনার মেসের বর্তমান অবস্থা দেখুন</p>
-                                    </div>
-                                    <div class="mt-3 mt-lg-0">
-                                        <form action="javascript:void(0);">
-                                            <div class="row g-3 mb-0 align-items-center">
-                                                <div class="col-sm-auto">
-                                                    <div class="input-group">
-                                                        <input type="text"
-                                                               class="form-control border-0 minimal-border dash-filter-picker shadow-sm"
-                                                               placeholder="তারিখ নির্বাচন করুন"
-                                                               data-provider="flatpickr" data-range-date="true"
-                                                               data-date-format="d M, Y"
-                                                               data-deafult-date="01 Jan 2022 to 31 Jan 2022">
-                                                        <div class="input-group-text bg-primary border-primary text-white">
-                                                            <i class="bx bx-calendar"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <button type="button"
-                                                            class="btn btn-soft-success material-shadow-none">
-                                                        <i class="bx bx-plus-circle align-middle me-1"></i>
-                                                        বাজার যোগ করুন
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Mess Summary Cards -->
-                        <div class="row g-4">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card card-animate card-balance">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-grow-1 overflow-hidden">
-                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">মেস ব্যালেন্স</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-end justify-content-between mt-4">
-                                            <div>
-                                                <h4 class="fs-22 fw-semibold mb-4">৳<span class="counter-value" data-target="0.00">0</span></h4>
-                                            </div>
-                                            <div class="avatar-sm flex-shrink-0">
-                                                <span class="avatar-title bg-success-subtle rounded fs-3">
-                                                    <i class="bx bx-wallet text-success"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card card-animate card-deposit">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-grow-1 overflow-hidden">
-                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">মোট ডিপোজিট</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-end justify-content-between mt-4">
-                                            <div>
-                                                <h4 class="fs-22 fw-semibold mb-4">৳<span class="counter-value" data-target="568.00">0</span></h4>
-                                            </div>
-                                            <div class="avatar-sm flex-shrink-0">
-                                                <span class="avatar-title bg-info-subtle rounded fs-3">
-                                                    <i class="bx bx-money text-info"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card card-animate card-meal">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-grow-1 overflow-hidden">
-                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">মোট মিল</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-end justify-content-between mt-4">
-                                            <div>
-                                                <h4 class="fs-22 fw-semibold mb-4">
-                                                    <span class="counter-value" data-target="2.50">0</span>
-                                                </h4>
-                                            </div>
-                                            <div class="avatar-sm flex-shrink-0">
-                                                <span class="avatar-title bg-primary-subtle rounded fs-3">
-                                                    <i class="bx bx-restaurant text-primary"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card card-animate card-rate">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            <div class="flex-grow-1 overflow-hidden">
-                                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">মিল রেট</p>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-end justify-content-between mt-4">
-                                            <div>
-                                                <h4 class="fs-22 fw-semibold mb-4">৳<span class="counter-value" data-target="227.20">0</span></h4>
-                                            </div>
-                                            <div class="avatar-sm flex-shrink-0">
-                                                <span class="avatar-title bg-warning-subtle rounded fs-3">
-                                                    <i class="bx bx-purchase-tag-alt text-warning"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Personal Info Section -->
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header d-flex align-items-center">
-                                        <i class="bx bx-user-circle text-primary me-2 fs-4"></i>
-                                        <h5 class="card-title mb-0">আমার ব্যক্তিগত তথ্য</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row g-4">
-                                            <div class="col-md-3">
-                                                <div class="card bg-light mb-0">
-                                                    <div class="card-body text-center py-4">
-                                                        <i class="bx bx-food-menu text-primary mb-2 fs-3"></i>
-                                                        <h6 class="text-muted">আমার মোট মিল</h6>
-                                                        <h3 class="mt-2">2.50</h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="card bg-light mb-0">
-                                                    <div class="card-body text-center py-4">
-                                                        <i class="bx bx-credit-card text-success mb-2 fs-3"></i>
-                                                        <h6 class="text-muted">আমার ডিপোজিট</h6>
-                                                        <h3 class="mt-2">৳568.00</h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="card bg-light mb-0">
-                                                    <div class="card-body text-center py-4">
-                                                        <i class="bx bx-cart-alt text-danger mb-2 fs-3"></i>
-                                                        <h6 class="text-muted">আমার খরচ</h6>
-                                                        <h3 class="mt-2">৳568.00</h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="card bg-light mb-0">
-                                                    <div class="card-body text-center py-4">
-                                                        <i class="bx bx-line-chart text-info mb-2 fs-3"></i>
-                                                        <h6 class="text-muted">আমার ব্যালেন্স</h6>
-                                                        <h3 class="mt-2">৳0.00</h3>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bazar and Members Section -->
-                        <div class="row mt-4 g-4">
-                            <div class="col-md-6">
-                                <div class="card h-100">
-                                    <div class="card-header d-flex align-items-center">
-                                        <i class="bx bx-calendar-check text-warning me-2 fs-4"></i>
-                                        <h5 class="card-title mb-0">আমার বাজার তারিখ</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="alert alert-info mb-4">
-                                            <div class="d-flex align-items-center mb-3">
-                                                <i class="bx bx-calendar text-info me-2 fs-5"></i>
-                                                <h6 class="mb-0">আপনার নির্ধারিত বাজারের তারিখ</h6>
-                                            </div>
-                                            <p class="mb-1 d-flex align-items-center">
-                                                <i class="bx bx-check-circle me-2"></i>
-                                                শনিবার, ৩ মে ২০২৫
-                                            </p>
-                                            <p class="mb-0 d-flex align-items-center">
-                                                <i class="bx bx-check-circle me-2"></i>
-                                                বুধবার, ১৪ মে ২০২৫
-                                            </p>
-                                        </div>
-                                        <button class="btn btn-primary w-100">
-                                            <i class="bx bx-calendar-edit me-1"></i>
-                                            বাজার ডেট সেট করুন
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card h-100">
-                                    <div class="card-header">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <i class="bx bx-group text-info me-2 fs-4"></i>
-                                                <h5 class="card-title mb-0">সদস্য তথ্য</h5>
-                                            </div>
-                                            <span class="badge bg-success">মোট ২ সদস্য</span>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover mb-0">
-                                                <thead>
-                                                <tr>
-                                                    <th>নাম</th>
-                                                    <th>মিল</th>
-                                                    <th>ব্যালেন্স</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr class="cursor-pointer" onclick="highlight(this)">
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar-sm me-2 d-flex align-items-center justify-content-center bg-primary-subtle rounded-circle">
-                                                                <span class="text-primary">AL</span>
-                                                            </div>
-                                                            AL Mamon
-                                                        </div>
-                                                    </td>
-                                                    <td>2.50</td>
-                                                    <td>৳0.00</td>
-                                                </tr>
-                                                <tr class="cursor-pointer" onclick="highlight(this)">
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar-sm me-2 d-flex align-items-center justify-content-center bg-info-subtle rounded-circle">
-                                                                <span class="text-info">MI</span>
-                                                            </div>
-                                                            Midul
-                                                        </div>
-                                                    </td>
-                                                    <td>0.00</td>
-                                                    <td>৳0.00</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Member Details Section -->
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header d-flex align-items-center">
-                                        <i class="bx bx-detail text-success me-2 fs-4"></i>
-                                        <h5 class="card-title mb-0">সদস্যদের বিস্তারিত তথ্য</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row g-4">
-                                            <!-- Member 1 -->
-                                            <div class="col-md-6">
-                                                <div class="card member-card">
-                                                    <div class="card-header bg-light d-flex align-items-center justify-content-between">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar-sm me-2 d-flex align-items-center justify-content-center bg-primary-subtle rounded-circle">
-                                                                <span class="text-primary">AL</span>
-                                                            </div>
-                                                            <h6 class="mb-0">AL Mamon</h6>
-                                                        </div>
-                                                        <span class="badge bg-primary">Active</span>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-food-menu text-muted me-2"></i> মোট মিল</span>
-                                                                <span class="fw-semibold">2.50</span>
-                                                            </li>
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-credit-card text-muted me-2"></i> মোট ডিপোজিট</span>
-                                                                <span class="fw-semibold">৳568.00</span>
-                                                            </li>
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-restaurant text-muted me-2"></i> মিল খরচ</span>
-                                                                <span class="fw-semibold">৳568.00</span>
-                                                            </li>
-
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-calculator text-muted me-2"></i> মোট খরচ</span>
-                                                                <span class="fw-semibold">৳568.00</span>
-                                                            </li>
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-wallet text-muted me-2"></i> ব্যালেন্স</span>
-                                                                <span class="fw-semibold">৳0.00</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Member 2 -->
-                                            <div class="col-md-6">
-                                                <div class="card member-card">
-                                                    <div class="card-header bg-light d-flex align-items-center justify-content-between">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar-sm me-2 d-flex align-items-center justify-content-center bg-info-subtle rounded-circle">
-                                                                <span class="text-info">MI</span>
-                                                            </div>
-                                                            <h6 class="mb-0">Midul</h6>
-                                                        </div>
-                                                        <span class="badge bg-warning text-dark">Inactive</span>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-food-menu text-muted me-2"></i> মোট মিল</span>
-                                                                <span class="fw-semibold">0.00</span>
-                                                            </li>
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-credit-card text-muted me-2"></i> মোট ডিপোজিট</span>
-                                                                <span class="fw-semibold">৳0.00</span>
-                                                            </li>
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-restaurant text-muted me-2"></i> মিল খরচ</span>
-                                                                <span class="fw-semibold">৳0.00</span>
-                                                            </li>
-
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-calculator text-muted me-2"></i> মোট খরচ</span>
-                                                                <span class="fw-semibold">৳0.00</span>
-                                                            </li>
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                                <span><i class="bx bx-wallet text-muted me-2"></i> ব্যালেন্স</span>
-                                                                <span class="fw-semibold">৳0.00</span>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="business_layout_body">
+    <!-- Meal Management Dashboard -->
+    <div class="business--home--header--wrapper">
+        <div class="business--home--header--column--row">
+            <div class="business--home--header--column">
+                <div class="business--home--header--count">
+                    <h5>মোট মিল</h5>
+                    <div class="business--home--header--count--icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+                            <path d="M12.9 6l-1.4 7h-1l-1.4-7h3.8zm-.8-4H9.8L9 4h4l-.9-2zM6 8.5l1.7 8.6c.1.5.5.9 1 .9h6.6c.5 0 .9-.4 1-.9L18 8.5c.1-.5-.3-1-.8-1.1-.1 0-.1 0-.2 0H7c-.6 0-1 .4-1 1 0 0 0 .1 0 .1z"
+                                stroke="white" stroke-width="1.5" fill="white"/>
+                            <path d="M14 18v1c0 1.1-.9 2-2 2s-2-.9-2-2v-1h4zM16 5h6M2 5h6"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
                     </div>
                 </div>
+                <div class="business--home--body--count">
+                    <h2>357<span>এই মাসে</span></h2>
+                </div>
+            </div>
+            <div class="business--home--header--column">
+                <div class="business--home--header--count">
+                    <h5>মোট বাজার</h5>
+                    <div class="business--home--header--count--icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none">
+                            <path d="M12 15V9M9 10.5h2.25M12.75 10.5H15M7 18.5h10c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M12 20.5v-2M8 20.5v-2M16 20.5v-2"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="business--home--body--count">
+                    <h2>৳15,750</h2>
+                </div>
+            </div>
+            <div class="business--home--header--column">
+                <div class="business--home--header--count">
+                    <h5> <h5>মিল রেট</h5>
+                    <div class="business--home--header--count--icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M20 8.25V18C20 21 18.21 22 16 22H8C5.79 22 4 21 4 18V8.25C4 5 5.79 4.25 8 4.25C8 4.87 8.24997 5.43 8.65997 5.84C9.06997 6.25 9.63 6.5 10.25 6.5H13.75C14.99 6.5 16 5.49 16 4.25C18.21 4.25 20 5 20 8.25Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M16 4.25C16 5.49 14.99 6.5 13.75 6.5H10.25C9.63 6.5 9.06997 6.25 8.65997 5.84C8.24997 5.43 8 4.87 8 4.25C8 3.01 9.01 2 10.25 2H13.75C14.37 2 14.93 2.25 15.34 2.66C15.75 3.07 16 3.63 16 4.25Z"
+                                stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M8 13H12" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M8 17H16" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="business--home--body--count">
+                    <h2>৳3,450</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="business--home--header--report">
+            <div class="business--home--report">
+                <h4>পূর্ববর্তী মিল রিপোর্ট</h4>
+                <button>দেখুন</button>
+            </div>
+            <div class="business--home--report">
+                <h4>নতুন মেনু সংযোজন</h4>
+                <button>যোগ করুন</button>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Simple counter animation
-        function animateCounters() {
-            const counters = document.querySelectorAll('.counter-value');
-            const speed = 200;
+    <!-- Meal Management Content -->
+    <div class="meal-management-content">
+        <div class="meal-management-section">
+            <h3 class="section-title">সদস্য তালিকা</h3>
+            <div class="member-list">
+                <table class="member-table">
+                    <thead>
+                        <tr>
+                            <th>সদস্য নাম</th>
+                            <th>মোট মিল</th>
+                            <th>মিল বাজার</th>
+                            <th>মিল ব্যালেন্স</th>
+                            <th>সম্পাদনা</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>আবদুল করিম</td>
+                            <td>45</td>
+                            <td>৳60</td>
+                            <td>৳3,000</td>
+                            <td>৳300</td>
 
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const increment = target / speed;
+                        </tr>
+                        <tr>
+                            <td>রফিক ইসলাম</td>
+                            <td>42</td>
+                            <td>৳60</td>
+                            <td>৳2,800</td>
+                            <td>৳280</td>
 
-                if(count < target) {
-                    counter.innerText = Math.ceil(count + increment);
-                    setTimeout(animateCounters, 1);
-                } else {
-                    counter.innerText = target.toFixed(2);
-                }
-            });
+                        </tr>
+                        <tr>
+                            <td>মাহফুজুর রহমান</td>
+                            <td>48</td>
+                            <td>৳60</td>
+                            <td>৳3,200</td>
+                            <td>৳320</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="meal-management-section">
+        <h3 class="section-title">বাজারের তালিকা</h3>
+        <div class="bazaar-list">
+            <div class="bazaar-card">
+                <h4>আবদুল করিমের বাজার</h4>
+                <ul>
+                    <li><span>তারিখ:</span> 2025-05-01</li>
+                    <li><span>মোট খরচ:</span> ৳2,500</li>
+                    <li><span>আইটেম:</span> চাল, ডাল, তেল</li>
+                </ul>
+            </div>
+            <div class="bazaar-card">
+                <h4>রফিক ইসলামের বাজার</h4>
+                <ul>
+                    <li><span>তারিখ:</span> 2025-05-02</li>
+                    <li><span>মোট খরচ:</span> ৳3,000</li>
+                    <li><span>আইটেম:</span> মাছ, মাংস, সবজি</li>
+                </ul>
+            </div>
+            <div class="bazaar-card">
+                <h4>মাহফুজুর রহমানের বাজার</h4>
+                <ul>
+                    <li><span>তারিখ:</span> 2025-05-03</li>
+                    <li><span>মোট খরচ:</span> ৳2,800</li>
+                    <li><span>আইটেম:</span> ডিম, দুধ, মশলা</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Additional styling for meal management */
+        .meal-management-content {
+            margin-top: 30px;
         }
 
-        // Highlight table row on click
-        function highlight(row) {
-            const rows = document.querySelectorAll('tbody tr');
-            rows.forEach(r => r.classList.remove('table-active'));
-            row.classList.add('table-active');
+        .meal-management-section {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
-        // Initialize on page load
-        window.onload = function() {
-            animateCounters();
-        };
-    </script>
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .meal-menu {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .meal-time {
+            flex: 1;
+            min-width: 250px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .meal-time h4 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #444;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .meal-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .meal-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+        }
+
+        .item-name {
+            font-weight: 500;
+        }
+
+        .item-quantity {
+            color: #666;
+        }
+
+        .stats-chart {
+            height: 250px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px 0;
+        }
+
+        .chart-placeholder {
+            display: flex;
+            align-items: flex-end;
+            height: 100%;
+            width: 100%;
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: #6c7ae0;
+            border-radius: 6px 6px 0 0;
+            position: relative;
+            min-height: 30px;
+            display: flex;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .chart-bar.active {
+            background: #4154f1;
+        }
+
+        .chart-bar:hover {
+            background: #4154f1;
+            cursor: pointer;
+        }
+
+        .chart-value {
+            position: absolute;
+            top: -25px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .chart-bar::after {
+            content: attr(data-day);
+            position: absolute;
+            bottom: -25px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .member-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .member-table th,
+        .member-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .member-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .member-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .table-action-btn {
+            background: #4154f1;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .table-action-btn:hover {
+            background: #364dd6;
+        }
+
+        .meal-management-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .primary-action,
+        .secondary-action {
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .primary-action {
+            background: #4154f1;
+            color: white;
+        }
+
+        .primary-action:hover {
+            background: #364dd6;
+        }
+
+        .secondary-action {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .secondary-action:hover {
+            background: #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .meal-menu {
+                flex-direction: column;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+         /* Styling for Bazaar List */
+         .bazaar-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .bazaar-card {
+            flex: 1;
+            min-width: 250px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .bazaar-card h4 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #444;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .bazaar-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bazaar-card li {
+            padding: 6px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .bazaar-card li span {
+            font-weight: 500;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .bazaar-list {
+                flex-direction: column;
+            }
+        }
+    </style>
+</div>
 @endsection

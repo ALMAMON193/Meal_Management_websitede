@@ -1,59 +1,41 @@
-<!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
-    data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
-
-<!-- Mirrored from themesbrand.com/velzon/html/master/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Nov 2024 15:49:14 GMT -->
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <!-- Meta Information -->
     <meta charset="utf-8" />
-    <title>@yield('title', 'Default Title')</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
-    <!-- Include custom styles -->
-    @include('backend.partials.style')
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <title>Eastoz - Business Home</title>
+    <!-- ==== Favicon ==== -->
+    <link rel="icon" type="image/png" href="/" />
+
+    <!-- ==== Plugins CSS Links ==== -->
+    <link rel="stylesheet" type="text/css" href="frontend/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="frontend/css/helper.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- ==== Custom CSS Links ==== -->
+    <link rel="stylesheet" type="text/css" href="frontend/css/somor.css" />
+    <link rel="stylesheet" type="text/css" href="frontend/css/shohag.css" />
+    <link rel="stylesheet" type="text/css" href="frontend/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="frontend/css/responsive.css" />
 </head>
 
 <body>
-    <!-- Begin page layout -->
-    <div id="layout-wrapper">
-
-        <!-- Include header -->
-        @include('backend.partials.header')
-
-        <!-- Include notifications -->
-        @include('backend.partials.notification')
-
-        <!-- Sidebar menu -->
+    <main class="business_layout business_home">
         @include('backend.partials.sidebar')
-        <!-- Left Sidebar End -->
-
-        <!-- Vertical Overlay for mobile screens -->
-        <div class="vertical-overlay"></div>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            @yield('content')
+        <div class="business_layout_body_wrapper">
+           @include('backend.partials.header')
+           @yield('content')
         </div>
-        <!-- End main content -->
-    </div>
-    <!-- End layout-wrapper -->
+        <div id="black_overlay"></div>
+    </main>
 
-    <!-- Back to top button -->
-    <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
-        <i class="ri-arrow-up-line"></i>
-    </button>
+    <!-- footer end  -->
+    <!-- footer end  -->
 
-    <!-- Preloader animation -->
-    <div id="preloader">
-        <div id="status">
-            <div class="spinner-border text-primary avatar-sm" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-    </div>
-    <!-- Include custom scripts -->
+    <!-- ==== All Js Links ==== -->
     @include('backend.partials.script')
 </body>
+
 </html>

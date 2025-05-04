@@ -1,0 +1,101 @@
+/* Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+/*==== Default Style :: Start ====*/
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+strong,
+i,
+ol,
+ul,
+li,
+form,
+label,
+footer,
+header,
+menu,
+nav,
+section {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-color: #fb8c00;
+  --secondary-color: #2e1a00;
+  --yellow: #ffc107;
+  --title: #2e1a00;
+  --white: #fff;
+  --black: #000;
+  --Nunito: "Nunito", sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+}
+main {
+  overflow-x: hidden;
+}
+ol,
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  -webkit-transition: 0.2s;
+  -o-transition: 0.2s;
+  transition: 0.2s;
+}
+
+p,
+span {
+  font-size: 16px;
+  line-height: 26px;
+}
+
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
+/*==== Default Style :: End ====*/
+
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section_title {
+  color: #2e1a00;
+  font-family: Nunito;
+  font-size: 56px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 74px;
+  text-transform: uppercase;
+}
+
+#black_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  display: none;
+}

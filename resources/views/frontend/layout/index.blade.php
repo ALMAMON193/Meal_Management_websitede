@@ -1,735 +1,365 @@
 @extends('frontend.app')
 @section('title', 'মেস ম্যানেজমেন্ট সিস্টেম')
 @section('content')
-<section class="section job-hero-section bg-light pb-0" id="hero">
-    <div class="container">
-        <div class="row justify-content-between align-items-center">
-            <div class="col-lg-6">
-                <div>
-                    <h1 class="display-6 fw-semibold text-capitalize mb-3 lh-base">আপনার মেস পরিচালনার জন্য সেরা সমাধান খুঁজুন</h1>
-                    <p class="lead text-muted lh-base mb-4">মেস ম্যানেজমেন্ট সিস্টেমের মাধ্যমে আপনার মেসের খরচ, খাবারের হিসাব এবং সদস্যদের তথ্য সহজে পরিচালনা করুন।</p>
-                    <ul class="treding-keywords list-inline mb-0 mt-3 fs-13">
-                        <li class="list-inline-item text-danger fw-semibold"><i class="ri-tag-fill align-middle"></i> জনপ্রিয় কীওয়ার্ড:</li>
-                        <li class="list-inline-item"><a href="javascript:void(0)">ছাত্র মেস,</a></li>
-                        <li class="list-inline-item"><a href="javascript:void(0)">বাজেট মেস,</a></li>
-                        <li class="list-inline-item"><a href="javascript:void(0)">পেশাদার মেস,</a></li>
-                        <li class="list-inline-item"><a href="javascript:void(0)">পরিচ্ছন্ন মেস</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="position-relative home-img text-center mt-5 mt-lg-0">
-                    <div class="card p-3 rounded shadow-lg inquiry-box">
-                        <div class="d-flex align-items-center">
-                            <div class="avatar-sm flex-shrink-0 me-3">
-                                <div class="avatar-title bg-warning-subtle text-warning rounded fs-18">
-                                    <i class="ri-mail-send-line"></i>
-                                </div>
-                            </div>
-                            <h5 class="fs-15 lh-base mb-0">মেস সম্পর্কিত তথ্যের জন্য যোগাযোগ</h5>
-                        </div>
-                    </div>
-                    <div class="card p-3 rounded shadow-lg application-box">
-                        <h5 class="fs-15 lh-base mb-3">সদস্যদের তালিকা</h5>
-                        <div class="avatar-group">
-                            <a href="javascript:void(0);" class="avatar-group-item" data-bs-toggle="tooltip" title="রহিম">
-                                <div class="avatar-xs">
-                                    <img src="https://via.placeholder.com/50" alt="" class="rounded-circle img-fluid">
-                                </div>
-                            </a>
-                            <a href="javascript:void(0);" class="avatar-group-item" data-bs-toggle="tooltip" title="করিম">
-                                <div class="avatar-xs">
-                                    <div class="avatar-title rounded-circle bg-danger">ক</div>
-                                </div>
-                            </a>
-                            <a href="javascript:void(0);" class="avatar-group-item" data-bs-toggle="tooltip" title="আলী">
-                                <div class="avatar-xs">
-                                    <img src="" alt="" class="rounded-circle img-fluid">
-                                </div>
-                            </a>
-                            <a href="javascript:void(0);" class="avatar-group-item" data-bs-toggle="tooltip" title="আরও সদস্য">
-                                <div class="avatar-xs">
-                                    <div class="avatar-title fs-13 rounded-circle bg-light border-dashed border text-primary">১০+</div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <img src="{{asset('frontend/images/job-profile2.png')}}" alt="মেসের ছবি" class="user-img">
-                    <div class="circle-effect">
-                        <div class="circle"></div>
-                        <div class="circle2"></div>
-                        <div class="circle3"></div>
-                        <div class="circle4"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<main>
+    <!-- Hero Section Start -->
+    <section class="hero_section">
+        <div class="container">
+            <div class="hero_section_wrapper">
+                <div class="hero_section_left">
+                    <h1 class="hero_section_title">
+                        আপনার মেস, আমাদের ব্যবস্থাপনা। সহজ ও স্মার্ট!
+                    </h1>
+                    <p class="hero_section_text">
+                        খাবার পরিকল্পনা, খরচ ট্র্যাকিং এবং সদস্য ব্যবস্থাপনা এক জায়গায়। <br />
+                        কোনো ঝামেলা ছাড়াই মেস পরিচালনা করুন!
+                    </p>
 
-<!-- Features Section -->
-<section class="section">
-    <div class="container">
-        <div class="row align-items-center justify-content-lg-between justify-content-center gy-4">
-            <div class="col-lg-5 col-sm-7">
-                <div class="about-img-section mb-5 mb-lg-0 text-center">
-                    <div class="card rounded shadow-lg inquiry-box d-none d-lg-block">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="avatar-sm flex-shrink-0 me-3">
-                                <div class="avatar-title bg-secondary-subtle text-secondary rounded-circle fs-18">
-                                    <i class="ri-briefcase-2-line"></i>
-                                </div>
-                            </div>
-                            <h5 class="fs-15 lh-base mb-0">১০,০০০+ মেস পরিচালিত</h5>
+                    <div class="hero_left_rating">
+                        <div class="hero_left_rating_img">
+                            <img src="frontend/images/hero-rating.png" alt="রেটিং" />
                         </div>
-                    </div>
-                    <div class="card feedback-box">
-                        <div class="card-body d-flex shadow-lg">
-                            <div class="flex-shrink-0 me-3">
-                                <img src="https://via.placeholder.com/50" alt="" class="avatar-sm rounded-circle">
-                            </div>
-                            <div class="flex-grow-1">
-                                <h5 class="fs-14 lh-base mb-0">তানিয়া রহমান</h5>
-                                <p class="text-muted fs-11 mb-1">মেস ম্যানেজার</p>
-                                <div class="text-warning">
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-line"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <img src="{{asset('frontend/images/about.jpg')}}" alt="মেসের ছবি" class="img-fluid mx-auto rounded-3" />
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="text-muted">
-                    <h1 class="mb-3 lh-base">এক জায়গায় আপনার <span class="text-primary">মেস পরিচালনা</span></h1>
-                    <p class="ff-secondary fs-16 mb-2">আপনার মেসের সমস্ত কার্যক্রম সহজে পরিচালনা করুন। খরচের হিসাব, খাবারের মেনু এবং সদস্যদের তথ্য এক জায়গায় রাখুন।</p>
-                    <p class="ff-secondary fs-16">আমাদের সিস্টেম আপনাকে সময় এবং শ্রম বাঁচাতে সাহায্য করবে।</p>
-                    <div class="vstack gap-2 mb-4 pb-1">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0 me-2">
-                                <div class="avatar-xs icon-effect">
-                                    <div class="avatar-title bg-transparent text-success rounded-circle h2">
-                                        <i class="ri-check-fill"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <p class="mb-0">স্বয়ংক্রিয় খরচ হিসাব</p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0 me-2">
-                                <div class="avatar-xs icon-effect">
-                                    <div class="avatar-title bg-transparent text-success rounded-circle h2">
-                                        <i class="ri-check-fill"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <p class="mb-0">খাবারের মেনু পরিকল্পনা</p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0 me-2">
-                                <div class="avatar-xs icon-effect">
-                                    <div class="avatar-title bg-transparent text-success rounded-circle h2">
-                                        <i class="ri-check-fill"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <p class="mb-0">সদস্যদের তথ্য সংরক্ষণ</p>
+                        <div class="hero_left_rating_text">
+                            <h6 class="hero_left_rating_title">৩৫০০+ রেটিং</h6>
+                            <div class="hero_left_rating_stars">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    viewBox="0 0 16 16" fill="none">
+                                    <path
+                                        d="M15.9583 6.32491C15.9071 6.16636 15.8104 6.02637 15.6802 5.92239C15.5501 5.81842 15.3922 5.75506 15.2262 5.74021L10.6082 5.32085L8.78209 1.04668C8.6474 0.733454 8.34077 0.530762 8.00007 0.530762C7.65938 0.530762 7.35271 0.733486 7.21808 1.04746L5.39197 5.32088L0.7732 5.74021C0.607451 5.75539 0.449802 5.81889 0.3198 5.92282C0.189799 6.02676 0.0931609 6.16657 0.0418688 6.32491C-0.0634776 6.64892 0.0338061 7.00427 0.290531 7.22828L3.78125 10.2896L2.75191 14.8238C2.67659 15.1572 2.80597 15.5018 3.0826 15.7017C3.23126 15.8092 3.40524 15.8639 3.58065 15.8639C3.7319 15.8639 3.8819 15.8231 4.0166 15.7425L8.00007 13.3617L11.9821 15.7425C12.2735 15.9178 12.6408 15.9018 12.9168 15.7017C13.0519 15.6039 13.1553 15.4686 13.2141 15.3125C13.2729 15.1564 13.2845 14.9864 13.2475 14.8238L12.2182 10.2896L15.7089 7.2289C15.8345 7.11923 15.925 6.97508 15.9694 6.81437C16.0137 6.65365 16.0099 6.48345 15.9583 6.32491Z"
+                                        fill="#FFC107" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    viewBox="0 0 16 16" fill="none">
+                                    <path
+                                        d="M15.9583 6.32491C15.9071 6.16636 15.8104 6.02637 15.6802 5.92239C15.5501 5.81842 15.3922 5.75506 15.2262 5.74021L10.6082 5.32085L8.78209 1.04668C8.6474 0.733454 8.34077 0.530762 8.00007 0.530762C7.65938 0.530762 7.35271 0.733486 7.21808 1.04746L5.39197 5.32088L0.7732 5.74021C0.607451 5.75539 0.449802 5.81889 0.3198 5.92282C0.189799 6.02676 0.0931609 6.16657 0.0418688 6.32491C-0.0634776 6.64892 0.0338061 7.00427 0.290531 7.22828L3.78125 10.2896L2.75191 14.8238C2.67659 15.1572 2.80597 15.5018 3.0826 15.7017C3.23126 15.8092 3.40524 15.8639 3.58065 15.8639C3.7319 15.8639 3.8819 15.8231 4.0166 15.7425L8.00007 13.3617L11.9821 15.7425C12.2735 15.9178 12.6408 15.9018 12.9168 15.7017C13.0519 15.6039 13.1553 15.4686 13.2141 15.3125C13.2729 15.1564 13.2845 14.9864 13.2475 14.8238L12.2182 10.2896L15.7089 7.2289C15.8345 7.11923 15.925 6.97508 15.9694 6.81437C16.0137 6.65365 16.0099 6.48345 15.9583 6.32491Z"
+                                        fill="#FFC107" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    viewBox="0 0 16 16" fill="none">
+                                    <path
+                                        d="M15.9583 6.32491C15.9071 6.16636 15.8104 6.02637 15.6802 5.92239C15.5501 5.81842 15.3922 5.75506 15.2262 5.74021L10.6082 5.32085L8.78209 1.04668C8.6474 0.733454 8.34077 0.530762 8.00007 0.530762C7.65938 0.530762 7.35271 0.733486 7.21808 1.04746L5.39197 5.32088L0.7732 5.74021C0.607451 5.75539 0.449802 5.81889 0.3198 5.92282C0.189799 6.02676 0.0931609 6.16657 0.0418688 6.32491C-0.0634776 6.64892 0.0338061 7.00427 0.290531 7.22828L3.78125 10.2896L2.75191 14.8238C2.67659 15.1572 2.80597 15.5018 3.0826 15.7017C3.23126 15.8092 3.40524 15.8639 3.58065 15.8639C3.7319 15.8639 3.8819 15.8231 4.0166 15.7425L8.00007 13.3617L11.9821 15.7425C12.2735 15.9178 12.6408 15.9018 12.9168 15.7017C13.0519 15.6039 13.1553 15.4686 13.2141 15.3125C13.2729 15.1564 13.2845 14.9864 13.2475 14.8238L12.2182 10.2896L15.7089 7.2289C15.8345 7.11923 15.925 6.97508 15.9694 6.81437C16.0137 6.65365 16.0099 6.48345 15.9583 6.32491Z"
+                                        fill="#FFC107" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    viewBox="0 0 16 16" fill="none">
+                                    <path
+                                        d="M15.9583 6.32491C15.9071 6.16636 15.8104 6.02637 15.6802 5.92239C15.5501 5.81842 15.3922 5.75506 15.2262 5.74021L10.6082 5.32085L8.78209 1.04668C8.6474 0.733454 8.34077 0.530762 8.00007 0.530762C7.65938 0.530762 7.35271 0.733486 7.21808 1.04746L5.39197 5.32088L0.7732 5.74021C0.607451 5.75539 0.449802 5.81889 0.3198 5.92282C0.189799 6.02676 0.0931609 6.16657 0.0418688 6.32491C-0.0634776 6.64892 0.0338061 7.00427 0.290531 7.22828L3.78125 10.2896L2.75191 14.8238C2.67659 15.1572 2.80597 15.5018 3.0826 15.7017C3.23126 15.8092 3.40524 15.8639 3.58065 15.8639C3.7319 15.8639 3.8819 15.8231 4.0166 15.7425L8.00007 13.3617L11.9821 15.7425C12.2735 15.9178 12.6408 15.9018 12.9168 15.7017C13.0519 15.6039 13.1553 15.4686 13.2141 15.3125C13.2729 15.1564 13.2845 14.9864 13.2475 14.8238L12.2182 10.2896L15.7089 7.2289C15.8345 7.11923 15.925 6.97508 15.9694 6.81437C16.0137 6.65365 16.0099 6.48345 15.9583 6.32491Z"
+                                        fill="#FFC107" />
+                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    viewBox="0 0 16 16" fill="none">
+                                    <path
+                                        d="M15.9583 6.32491C15.9071 6.16636 15.8104 6.02637 15.6802 5.92239C15.5501 5.81842 15.3922 5.75506 15.2262 5.74021L10.6082 5.32085L8.78209 1.04668C8.6474 0.733454 8.34077 0.530762 8.00007 0.530762C7.65938 0.530762 7.35271 0.733486 7.21808 1.04746L5.39197 5.32088L0.7732 5.74021C0.607451 5.75539 0.449802 5.81889 0.3198 5.92282C0.189799 6.02676 0.0931609 6.16657 0.0418688 6.32491C-0.0634776 6.64892 0.0338061 7.00427 0.290531 7.22828L3.78125 10.2896L2.75191 14.8238C2.67659 15.1572 2.80597 15.5018 3.0826 15.7017C3.23126 15.8092 3.40524 15.8639 3.58065 15.8639C3.7319 15.8639 3.8819 15.8231 4.0166 15.7425L8.00007 13.3617L11.9821 15.7425C12.2735 15.9178 12.6408 15.9018 12.9168 15.7017C13.0519 15.6039 13.1553 15.4686 13.2141 15.3125C13.2729 15.1564 13.2845 14.9864 13.2475 14.8238L12.2182 10.2896L15.7089 7.2289C15.8345 7.11923 15.925 6.97508 15.9694 6.81437C16.0137 6.65365 16.0099 6.48345 15.9583 6.32491Z"
+                                        fill="#FFC107" />
+                                </svg>
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <a href="#!" class="btn btn-primary">আরও জানুন <i class="ri-arrow-right-line align-bottom ms-1"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Key Features Section -->
-<section class="section bg-light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7">
-                <div class="text-center mb-5">
-                    <h2 class="mb-3">আমাদের সিস্টেমের <span class="text-primary">বিশেষ সুবিধা</span></h2>
-                    <p class="text-muted fs-15">আপনার মেস পরিচালনাকে সহজ, সুন্দর এবং কার্যকর করার জন্য আমরা নিচের সুবিধাগুলো প্রদান করি</p>
-                </div>
-            </div>
-        </div>
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6">
-                <div class="card feature-card">
-                    <div class="card-body p-4">
-                        <div class="avatar-md mb-4">
-                            <div class="avatar-title bg-primary bg-opacity-10 rounded fs-20 text-primary">
-                                <i class="ri-line-chart-line"></i>
-                            </div>
-                        </div>
-                        <h5 class="fs-17">খরচ ট্র্যাকিং</h5>
-                        <p class="text-muted mb-0">প্রতিদিনের বাজার, বিল এবং অন্যান্য খরচের স্বয়ংক্রিয় হিসাব রাখুন</p>
+                    <div class="hero_left_btns">
+                        <a href="/register" class="hero_left_join_btn">
+                            এখনই যোগ দিন <i class="fa-solid fa-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card feature-card">
-                    <div class="card-body p-4">
-                        <div class="avatar-md mb-4">
-                            <div class="avatar-title bg-primary bg-opacity-10 rounded fs-20 text-primary">
-                                <i class="ri-restaurant-line"></i>
-                            </div>
-                        </div>
-                        <h5 class="fs-17">মেনু প্ল্যানিং</h5>
-                        <p class="text-muted mb-0">সাপ্তাহিক বা মাসিক খাবারের মেনু তৈরি করুন এবং সদস্যদের সাথে শেয়ার করুন</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card feature-card">
-                    <div class="card-body p-4">
-                        <div class="avatar-md mb-4">
-                            <div class="avatar-title bg-primary bg-opacity-10 rounded fs-20 text-primary">
-                                <i class="ri-team-line"></i>
-                            </div>
-                        </div>
-                        <h5 class="fs-17">সদস্য ব্যবস্থাপনা</h5>
-                        <p class="text-muted mb-0">সকল সদস্যের তথ্য, বকেয়া এবং উপস্থিতি এক জায়গায় সংরক্ষণ করুন</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card feature-card">
-                    <div class="card-body p-4">
-                        <div class="avatar-md mb-4">
-                            <div class="avatar-title bg-primary bg-opacity-10 rounded fs-20 text-primary">
-                                <i class="ri-notification-line"></i>
-                            </div>
-                        </div>
-                        <h5 class="fs-17">স্বয়ংক্রিয় নোটিফিকেশন</h5>
-                        <p class="text-muted mb-0">জরুরী নোটিশ, বিলের রিমাইন্ডার এবং অন্যান্য তথ্য সদস্যদের জানান</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card feature-card">
-                    <div class="card-body p-4">
-                        <div class="avatar-md mb-4">
-                            <div class="avatar-title bg-primary bg-opacity-10 rounded fs-20 text-primary">
-                                <i class="ri-file-chart-line"></i>
-                            </div>
-                        </div>
-                        <h5 class="fs-17">রিপোর্ট জেনারেশন</h5>
-                        <p class="text-muted mb-0">মাসিক বা বাৎসরিক খরচের বিশদ রিপোর্ট তৈরি করুন</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="card feature-card">
-                    <div class="card-body p-4">
-                        <div class="avatar-md mb-4">
-                            <div class="avatar-title bg-primary bg-opacity-10 rounded fs-20 text-primary">
-                                <i class="ri-smartphone-line"></i>
-                            </div>
-                        </div>
-                        <h5 class="fs-17">মোবাইল ফ্রেন্ডলি</h5>
-                        <p class="text-muted mb-0">যেকোনো ডিভাইস থেকে আপনার মেসের তথ্য এক্সেস করুন</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- How It Works Section -->
-<section class="section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7">
-                <div class="text-center mb-5">
-                    <h2 class="mb-3">এটি কিভাবে <span class="text-primary">কাজ করে</span></h2>
-                    <p class="text-muted fs-15">মাত্র কয়েকটি সহজ ধাপে আপনার মেস ব্যবস্থাপনা শুরু করুন</p>
-                </div>
-            </div>
-        </div>
-        <div class="row gy-4">
-            <div class="col-lg-4">
-                <div class="how-it-work-box text-center p-4">
-                    <div class="how-it-work-img mb-4">
-                        <div class="avatar-lg mx-auto">
-                            <div class="avatar-title bg-primary bg-opacity-10 rounded-circle text-primary fs-20">
-                                1
-                            </div>
-                        </div>
+                <div class="hero_section_right">
+                    <div class="hero-right-main-image">
+                        <img src="frontend/images/qna-left.png" alt="মেস ব্যানার" />
                     </div>
-                    <h5 class="fs-17">অ্যাকাউন্ট তৈরি করুন</h5>
-                    <p class="text-muted mb-0">আমাদের ওয়েবসাইটে রেজিস্ট্রেশন করুন এবং আপনার মেসের প্রোফাইল তৈরি করুন</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="how-it-work-box text-center p-4">
-                    <div class="how-it-work-img mb-4">
-                        <div class="avatar-lg mx-auto">
-                            <div class="avatar-title bg-primary bg-opacity-10 rounded-circle text-primary fs-20">
-                                2
-                            </div>
-                        </div>
-                    </div>
-                    <h5 class="fs-17">সদস্য যোগ করুন</h5>
-                    <p class="text-muted mb-0">আপনার মেসের সকল সদস্যের প্রোফাইল তৈরি করুন এবং তাদের তথ্য সংরক্ষণ করুন</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="how-it-work-box text-center p-4">
-                    <div class="how-it-work-img mb-4">
-                        <div class="avatar-lg mx-auto">
-                            <div class="avatar-title bg-primary bg-opacity-10 rounded-circle text-primary fs-20">
-                                3
-                            </div>
-                        </div>
-                    </div>
-                    <h5 class="fs-17">পরিচালনা শুরু করুন</h5>
-                    <p class="text-muted mb-0">খরচের হিসাব, মেনু প্ল্যানিং এবং অন্যান্য কার্যক্রম শুরু করুন</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
-<!-- Testimonial Section -->
-<section class="section bg-light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7">
-                <div class="text-center mb-5">
-                    <h2 class="mb-3">ব্যবহারকারীদের <span class="text-primary">মতামত</span></h2>
-                    <p class="text-muted fs-15">আমাদের সিস্টেম ব্যবহার করে এমন মেস ম্যানেজারদের অভিজ্ঞতা</p>
+                    <img class="hero_right_shadow_top" src="frontend/images/shadow-white.png" alt="" />
+                    <img class="hero_right_shadow_bottom" src="frontend/images/shadow-white.png" alt="" />
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="owl-carousel owl-theme" id="testimonial-carousel">
-                    <div class="item">
-                        <div class="card testi-box">
-                            <div class="card-body">
-                                <div class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('frontend/images/users/avatar-2.jpg')}}" class="rounded-circle avatar-sm" alt="">
-                                    <div class="flex-grow-1 ms-3">
-                                        <h5 class="fs-16 mb-0">আহসান হাবীব</h5>
-                                        <p class="text-muted mb-0">মেস ম্যানেজার, ঢাকা</p>
-                                    </div>
-                                </div>
-                                <div class="mb-4 pb-2">
-                                    <p class="text-muted mb-0">"এই সিস্টেম ব্যবহার করে আমাদের মেসের মাসিক খরচ ২০% কমিয়েছি। হিসাব রাখা এখন অনেক সহজ।"</p>
-                                </div>
-                                <div class="text-warning">
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="card testi-box">
-                            <div class="card-body">
-                                <div class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('frontend/images/users/avatar-2.jpg')}}" class="rounded-circle avatar-sm" alt="">
-                                    <div class="flex-grow-1 ms-3">
-                                        <h5 class="fs-16 mb-0">ফারহানা আক্তার</h5>
-                                        <p class="text-muted mb-0">ছাত্রী মেস মালিক, চট্টগ্রাম</p>
-                                    </div>
-                                </div>
-                                <div class="mb-4 pb-2">
-                                    <p class="text-muted mb-0">"খাবারের মেনু প্ল্যানিং এখন খুবই সহজ। সদস্যরা তাদের পছন্দ-অপছন্দ জানাতে পারে যা ব্যবস্থাপনাকে সহজ করে।"</p>
-                                </div>
-                                <div class="text-warning">
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-half-line"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="card testi-box">
-                            <div class="card-body">
-                                <div class="d-flex mb-4 align-items-center">
-                                    <img src="{{asset('frontend/images/users/avatar-2.jpg')}}" class="rounded-circle avatar-sm" alt="">
-                                    <div class="flex-grow-1 ms-3">
-                                        <h5 class="fs-16 mb-0">রফিকুল ইসলাম</h5>
-                                        <p class="text-muted mb-0">পেশাদার মেস মালিক, সিলেট</p>
-                                    </div>
-                                </div>
-                                <div class="mb-4 pb-2">
-                                    <p class="text-muted mb-0">"বিল সংগ্রহ এবং হিসাব রাখার কাজটি এখন সম্পূর্ণ স্বয়ংক্রিয়। সময় বাঁচানোর জন্য অসাধারণ একটি সমাধান।"</p>
-                                </div>
-                                <div class="text-warning">
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-s-fill"></i>
-                                    <i class="ri-star-line"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+    <!-- Hero Section End -->
 
-<!-- Pricing Section -->
-<section class="section">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7">
-                <div class="text-center mb-5">
-                    <h2 class="mb-3">সাশ্রয়ী মূল্যের <span class="text-primary">প্যাকেজ</span></h2>
-                    <p class="text-muted fs-15">আপনার চাহিদা অনুযায়ী সঠিক প্যাকেজ নির্বাচন করুন</p>
+    <!-- About Mess Management Section Start -->
+    <section class="about_feedback_section">
+        <div class="container">
+            <div class="about_feedback_wrapper">
+                <div class="about_feedback_top">
+                    <h2 class="about_feedback_section_title section_title">
+                        মেস ম্যানেজমেন্ট সম্পর্কে
+                    </h2>
                 </div>
-            </div>
-        </div>
-        <div class="row gy-4">
-            <div class="col-lg-4">
-                <div class="card pricing-box">
-                    <div class="card-body p-4 m-2">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1">বেসিক</h5>
-                                <p class="text-muted mb-0">ছোট মেসের জন্য</p>
-                            </div>
-                            <div class="avatar-sm">
-                                <div class="avatar-title bg-primary bg-opacity-10 rounded-circle text-primary">
-                                    <i class="ri-user-line fs-20"></i>
-                                </div>
-                            </div>
+                <div class="about_feedback_bottom">
+                    <div class="about_feedback_item">
+                        <div class="about_feedback_item_top">
+                            <h5>১০০% <span>সময় সাশ্রয়</span></h5>
                         </div>
-                        <div class="pt-4">
-                            <h2><sup><small>৳</small></sup>500<span class="fs-13 text-muted">/মাস</span></h2>
-                        </div>
-                        <hr class="my-4 text-muted">
-                        <div>
-                            <ul class="list-unstyled text-muted vstack gap-3">
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            সর্বোচ্চ ১০ সদস্য
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            মাসিক খরচ ট্র্যাকিং
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            মৌলিক রিপোর্টিং
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-danger me-1">
-                                            <i class="ri-close-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            অ্যাডভান্সড রিপোর্টিং
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-danger me-1">
-                                            <i class="ri-close-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            মাল্টি-মেস ব্যবস্থাপনা
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="mt-4">
-                                <a href="#!" class="btn btn-soft-primary w-100">নির্বাচন করুন</a>
-                            </div>
+                        <div class="about_feedback_item_bottom">
+                            <h5 class="about_feedback_item_bottom_title">
+                                সহজ ব্যবস্থাপনা
+                            </h5>
+                            <p class="about_feedback_item_bottom_text">
+                                আমাদের সিস্টেম খাবার পরিকল্পনা, খরচ ট্র্যাকিং এবং সদস্য ব্যবস্থাপনাকে সহজ করে, যাতে আপনি সময় বাঁচাতে পারেন।
+                            </p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card pricing-box ribbon-box right">
-                    <div class="card-body p-4 m-2">
-                        <div class="ribbon ribbon-primary round-shape">সেরা অফার</div>
-                        <div class="d-flex align-items-center">
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1">স্ট্যান্ডার্ড</h5>
-                                <p class="text-muted mb-0">মাঝারি আকারের মেসের জন্য</p>
-                            </div>
-                            <div class="avatar-sm">
-                                <div class="avatar-title bg-primary bg-opacity-10 rounded-circle text-primary">
-                                    <i class="ri-team-line fs-20"></i>
-                                </div>
-                            </div>
+                    <div class="about_feedback_item">
+                        <div class="about_feedback_item_top">
+                            <h5>৯০% <span>১ বছরে বৃদ্ধি</span></h5>
                         </div>
-                        <div class="pt-4">
-                            <h2><sup><small>৳</small></sup>800<span class="fs-13 text-muted">/মাস</span></h2>
-                        </div>
-                        <hr class="my-4 text-muted">
-                        <div>
-                            <ul class="list-unstyled text-muted vstack gap-3">
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            সর্বোচ্চ ২০ সদস্য
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            ডেইলি খরচ ট্র্যাকিং
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            অ্যাডভান্সড রিপোর্টিং
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            মেনু প্ল্যানিং
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-danger me-1">
-                                            <i class="ri-close-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            মাল্টি-মেস ব্যবস্থাপনা
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="mt-4">
-                                <a href="#!" class="btn btn-primary w-100">নির্বাচন করুন</a>
-                            </div>
+                        <div class="about_feedback_item_bottom">
+                            <h5 class="about_feedback_item_bottom_title">
+                                সঠিক হিসাব
+                            </h5>
+                            <p class="about_feedback_item_bottom_text">
+                                বাজার খরচ এবং সদস্যদের আমানত সঠিকভাবে ট্র্যাক করে মেসের আর্থিক ব্যবস্থাপনাকে শক্তিশালী করুন।
+                            </p>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card pricing-box">
-                    <div class="card-body p-4 m-2">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-grow-1">
-                                <h5 class="mb-1">প্রিমিয়াম</h5>
-                                <p class="text-muted mb-0">বড় মেস বা একাধিক মেসের জন্য</p>
-                            </div>
-                            <div class="avatar-sm">
-                                <div class="avatar-title bg-primary bg-opacity-10 rounded-circle text-primary">
-                                    <i class="ri-building-4-line fs-20"></i>
-                                </div>
-                            </div>
+                    <div class="about_feedback_item">
+                        <div class="about_feedback_item_top">
+                            <h5>৮৫% <span>সদস্য সন্তুষ্টি</span></h5>
                         </div>
-                        <div class="pt-4">
-                            <h2><sup><small>৳</small></sup>1500<span class="fs-13 text-muted">/মাস</span></h2>
+                        <div class="about_feedback_item_bottom">
+                            <h5 class="about_feedback_item_bottom_title">
+                                স্বচ্ছতা
+                            </h5>
+                            <p class="about_feedback_item_bottom_text">
+                                প্রতিটি সদস্যের খরচ এবং মিলের হিসাব স্বচ্ছভাবে দেখুন, যাতে কোনো বিভ্রান্তি না থাকে।
+                            </p>
                         </div>
-                        <hr class="my-4 text-muted">
-                        <div>
-                            <ul class="list-unstyled text-muted vstack gap-3">
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            সদস্য সীমাহীন
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            ডিটেইলড খরচ ট্র্যাকিং
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            কাস্টম রিপোর্টিং
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            মাল্টি-মেস ব্যবস্থাপনা
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                        <div class="flex-shrink-0 text-success me-1">
-                                            <i class="ri-checkbox-circle-fill fs-15 align-middle"></i>
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            প্রায়োরিটি সাপোর্ট
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="mt-4">
-                                <a href="#!" class="btn btn-soft-primary w-100">নির্বাচন করুন</a>
-                            </div>
+                    </div>
+                    <div class="about_feedback_item">
+                        <div class="about_feedback_item_top">
+                            <h5>৭৫% <span>দক্ষতা বৃদ্ধি</span></h5>
+                        </div>
+                        <div class="about_feedback_item_bottom">
+                            <h5 class promen="about_feedback_item_bottom_title">
+                                স্মার্ট পরিকল্পনা
+                            </h5>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- FAQ Section -->
-<section class="section bg-light">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-7">
-                <div class="text-center mb-5">
-                    <h2 class="mb-3">সচরাচর জিজ্ঞাসিত <span class="text-primary">প্রশ্নাবলী</span></h2>
-                    <p class="text-muted fs-15">আপনার মনে থাকা সাধারণ প্রশ্নগুলোর উত্তর</p>
-                </div>
-            </div>
+        <div>
+            <img class="about_feedback_bg" src="frontend/images/mess-bg.png" alt="মেস ব্যাকগ্রাউন্ড" />
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                এই সিস্টেম ব্যবহার করতে কি প্রযুক্তিগত জ্ঞান প্রয়োজন?
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p class="text-muted mb-0">না, আমাদের সিস্টেম ব্যবহার করা খুবই সহজ। মোবাইল বা কম্পিউটার ব্যবহার করতে পারলেই আপনি এটি ব্যবহার করতে পারবেন। আমরা ব্যবহারকারী বান্ধব ইন্টারফেস প্রদান করি।</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                আমার ডেটা কতটা নিরাপদ?
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p class="text-muted mb-0">আমরা আধুনিক এনক্রিপশন প্রযুক্তি ব্যবহার করে আপনার সমস্ত ডেটা সুরক্ষিত রাখি। শুধুমাত্র আপনার অনুমতিপ্রাপ্ত ব্যবহারকারীরা ডেটা দেখতে পারবে।</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                প্যাকেজ পরিবর্তন করা যাবে কি?
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p class="text-muted mb-0">হ্যাঁ, আপনি যেকোনো সময় আপনার প্যাকেজ আপগ্রেড বা ডাউনগ্রেড করতে পারবেন। নতুন প্যাকেজের বিলিং পরবর্তী বিলিং সাইকেল থেকে কার্যকর হবে।</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingFour">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                ফ্রি ট্রায়াল আছে কি?
-                            </button>
-                        </h2>
-                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <p class="text-muted mb-0">হ্যাঁ, আমরা ১৪ দিনের ফ্রি ট্রায়াল প্রদান করি। ট্রায়াল পিরিয়ড শেষ হওয়ার পর আপনি আমাদের যেকোনো প্যাকেজ নির্বাচন করতে পারবেন।</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+    <!-- About Mess Management Section End -->
 
-<!-- CTA Section -->
-<section class="py-5 bg-primary position-relative">
-    <div class="bg-overlay bg-overlay-pattern opacity-50"></div>
-    <div class="container">
-        <div class="row align-items-center gy-4">
-            <div class="col-sm">
-                <div>
-                    <h4 class="text-white mb-2">শুরু করতে প্রস্তুত?</h4>
-                    <p class="text-white-50 mb-0">একটি নতুন অ্যাকাউন্ট তৈরি করুন এবং আপনার মেস পরিচালনা শুরু করুন</p>
+    <!-- QNA Section Start -->
+    <section class="qna_section">
+        <div class="container">
+            <div class="qna_wrapper">
+                <div class="qna_left">
+                    <h3 class="qna_left_title">আমাদের সম্পর্কে আরও জানুন</h3>
+                    <p class="qna_left_text">
+                        আমাদের মেস ম্যানেজমেন্ট সিস্টেম আপনার দৈনন্দিন মেস পরিচালনাকে আরও সহজ ও কার্যকর করে। আমাদের সাথে যোগ দিন এবং অভিজ্ঞতা নিন।
+                    </p>
+                    <a href="/register" class="qna_left_join_btn">এখনই যোগ দিন <i
+                            class="fa-solid fa-arrow-right"></i></a>
+
+                    <div class="qna_left_img">
+                        <img src="frontend/images/mess-qna.png" alt="প্রশ্নোত্তর ছবি" />
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-auto">
-                <div>
-                    <a href="#!" class="btn bg-gradient btn-danger">ফ্রি অ্যাকাউন্ট তৈরি করুন</a>
+                <div class="qna_right">
+                    <!-- bs accordion starts -->
+                    <div class="accordion accordion-wrapper" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                    মেস ম্যানেজমেন্ট সিস্টেম কীভাবে কাজ করে?
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show"
+                                aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p class="accordion_body_text">
+                                        আমাদের সিস্টেম খাবার পরিকল্পনা, খরচ ট্র্যাকিং এবং সদস্য ব্যবস্থাপনার জন্য একটি সহজ প্ল্যাটফর্ম প্রদান করে। আপনি সহজেই মিল হিসাব করতে পারেন এবং বাজার খরচ নিয়ন্ত্রণ করতে পারেন।
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    কীভাবে বাজার খরচ ট্র্যাক করবেন?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse"
+                                aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p class="accordion_body_text">
+                                        আপনি প্রতিদিনের বাজার তালিকা যোগ করতে পারেন এবং সিস্টেম স্বয়ংক্রিয়ভাবে খরচ হিসাব করে সদস্যদের মধ্যে ভাগ করে দেয়।
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                    aria-expanded="false" aria-controls="collapseThree">
+                                    সদস্যদের তথ্য কীভাবে সুরক্ষিত থাকে?
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse"
+                                aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p class="accordion_body_text">
+                                        আমরা উন্নত নিরাপত্তা ব্যবস্থা ব্যবহার করি যাতে সদস্যদের তথ্য সুরক্ষিত থাকে এবং শুধুমাত্র অনুমোদিত ব্যক্তিরা এটি অ্যাক্সেস করতে পারে।
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseFour"
+                                    aria-expanded="false" aria-controls="collapseFour">
+                                    কেন আমাদের সিস্টেম বেছে নেবেন?
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse"
+                                aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p class="accordion_body_text">
+                                        আমাদের সিস্টেম সহজ, ব্যবহারকারী-বান্ধব এবং সময় সাশ্রয়ী। এটি মেস পরিচালনার প্রতিটি দিককে সুগম করে।
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                                    aria-expanded="false" aria-controls="collapseFive">
+                                    কীভাবে মিল পরিকল্পনা করবেন?
+                                </button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse"
+                                aria-labelledby="headingFive">
+                                <div class="accordion-body">
+                                    <p class="accordion_body_text">
+                                        আপনি দৈনিক বা সাপ্তাহিক মিল পরিকল্পনা তৈরি করতে পারেন এবং সদস্যদের উপস্থিতি ও পছন্দ অনুযায়ী হিসাব করতে পারেন।
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSix">
+                                <button class="accordion-button collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false"
+                                    aria-controls="collapseSix">
+                                    কীভাবে শুরু করবেন?
+                                </button>
+                            </h2>
+                            <div id="collapseSix" class="accordion-collapse collapse"
+                                aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <p class="accordion_body_text">
+                                        একটি ফ্রি অ্যাকাউন্ট তৈরি করুন, আপনার মেসের তথ্য যোগ করুন এবং ম্যানেজমেন্ট শুরু করুন!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- bs accordion ends -->
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+    <!-- QNA Section End -->
+
+    <!-- Our Team Section Start -->
+    <section class="our_team_section">
+        <div class="container">
+            <div class="our_team_wrapper">
+                <div class="our_team_top">
+                    <h2 class="our_team_section_title section_title">
+                        আমাদের টিমের সাথে পরিচিত হন
+                    </h2>
+                    <p class="our_team_section_text">
+                        আমাদের দক্ষ টিম মেস ম্যানেজমেন্ট সিস্টেমকে আরও উন্নত করতে নিরলস কাজ করে যাচ্ছে।
+                    </p>
+                </div>
+                <div class="our_team_bottom">
+                    <div class="our_team_item">
+                        <div class="our_team_item_img">
+                            <img src="frontend/images/team1.png" alt="টিম সদস্য" />
+                        </div>
+                        <div class="our_team_item_text">
+                            <h6 class="our_team_item_title">আল মামুন</h6>
+                            <p class="our_team_item_position">প্রতিষ্ঠাতা</p>
+                        </div>
+                    </div>
+                    <div class="our_team_item">
+                        <div class="our_team_item_img">
+                            <img src="frontend/images/team2.png" alt="টিম সদস্য" />
+                        </div>
+                        <div class="our_team_item_text">
+                            <h6 class="our_team_item_title">মিডুল হাসান</h6>
+                            <p class="our_team_item_position">প্রোগ্রামার</p>
+                        </div>
+                    </div>
+                    <div class="our_team_item">
+                        <div class="our_team_item_img">
+                            <img src="frontend/images/team3.png" alt="টিম সদস্য" />
+                        </div>
+                        <div class="our_team_item_text">
+                            <h6 class="our_team_item_title">রহিম খান</h6>
+                            <p class="our_team_item_position">ডিজাইনার</p>
+                        </div>
+                    </div>
+                    <div class="our_team_item">
+                        <div class="our_team_item_img">
+                            <img src="frontend/images/team4.png" alt="টিম সদস্য" />
+                        </div>
+                        <div class="our_team_item_text">
+                            <h6 class="our_team_item_title">করিম আলী</h6>
+                            <p class="our_team_item_position">সাপোর্ট ম্যানেজার</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Our Team Section End -->
+
+    <!-- Contact Us Section Start -->
+    <section class="contact_us_section"
+        style="
+      background: url(frontend/images/contact-bg.png) no-repeat center/cover;
+    ">
+        <div class="container">
+            <div class="contact_us_wrapper">
+                <h2 class="contact_us_title">
+                    কোনো প্রশ্ন থাকলে আমাদের সাথে যোগাযোগ করুন
+                </h2>
+
+                <ul class="contact_us_btns">
+                    <li>
+                        <a href="/register" class="contact_btn">
+                            এখনই যোগ দিন <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tel:+8801234567890" class="contact_btn">
+                            <i class="fa-solid fa-phone"></i> +৮৮০১২৩৪৫৬৭৮৯০
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Us Section End -->
+</main>
 @endsection

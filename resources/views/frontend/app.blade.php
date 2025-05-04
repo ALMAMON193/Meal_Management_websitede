@@ -1,36 +1,40 @@
-<!doctype html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg"
-    data-sidebar-image="none" data-preloader="disable" data-theme="default" data-theme-colors="default">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-
     <meta charset="utf-8" />
-    <title>Job Landing | Velzon - Admin & Dashboard Template</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-    <meta content="Themesbrand" name="author" />
-    <!-- App favicon -->
-    @include('frontend.partials.style')
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <title>Eastoz - Home</title>
+    <!-- ==== Favicon ==== -->
+    <link rel="icon" type="image/png" href="/" />
 
+    <!-- ==== Plugins CSS Links ==== -->
+    <link rel="stylesheet" type="text/css" href="frontend/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="frontend/css/helper.css" />
+    <!-- ==== Custom CSS Links ==== -->
+    @include('frontend.partials.style')
 </head>
 
-<body data-bs-spy="scroll" data-bs-target="#navbar-example">
-    <!-- Begin page -->
-    <div class="layout-wrapper landing">
-        @include('frontend.partials.nav')
-        <!-- end navbar -->
-       @yield('content')
+<body>
+    <!-- Start Navbar  -->
+    @include('frontend.partials.nav')
+    <!-- End Navbar  -->
 
-        <!--start back-to-top-->
-        <button onclick="topFunction()" class="btn btn-info btn-icon landing-back-top" id="back-to-top">
-            <i class="ri-arrow-up-line"></i>
-        </button>
-        <!--end back-to-top-->
+   @yield('content')
 
-    </div>
-    <!-- end layout wrapper -->
+    <!-- footer start  -->
+    <!-- footer start  -->
    @include('frontend.partials.footer')
-    <!-- JAVASCRIPT -->
+
+    <!-- footer end  -->
+    <!-- footer end  -->
+
+    <!-- ==== All Js Links ==== -->
+    <script>
+        const currentYear = new Date().getFullYear();
+        document.getElementById("current_year").textContent = currentYear;
+    </script>
     @include('frontend.partials.script')
 </body>
+
 </html>

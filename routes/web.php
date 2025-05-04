@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\frontend\MarketItemController;
 
+Route::get('/', function () {
+    return view('frontend.layout.index');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 Route::get('/dashboard', function () {
@@ -16,6 +19,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/', [MarketItemController::class, 'index'])->name('home');
 
 require __DIR__.'/auth.php';

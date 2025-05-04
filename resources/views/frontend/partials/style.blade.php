@@ -1,15 +1,8 @@
-<link rel="shortcut icon" href="{{asset('frontend/images/favicon.ico')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/somor.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/style.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/responsive.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/shohag.css') }}" />
 
-<!--Swiper slider css-->
-<link href="{{asset('frontend/libs/swiper/swiper-bundle.min.css')}}" rel="stylesheet" type="text/css" />
-
-<!-- Layout config Js -->
-<script src="{{asset('frontend/js/layout.js')}}"></script>
-<!-- Bootstrap Css -->
-<link href="{{asset('frontend/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
-<!-- Icons Css -->
-<link href="{{asset('frontend/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
-<!-- App Css-->
-<link href="{{asset('frontend/css/app.min.css')}}" rel="stylesheet" type="text/css" />
-<!-- custom Css-->
-<link href="{{asset('frontend/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
