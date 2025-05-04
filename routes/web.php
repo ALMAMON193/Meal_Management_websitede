@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Backend\MemberController;
 use App\Http\Controllers\Web\frontend\MarketItemController;
 
 Route::get('/', function () {
     return view('frontend.layout.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('home');
 
 
 Route::get('/dashboard', function () {
@@ -17,6 +18,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'is.manager'])->group(function () {
+    Route::get('/members', [MemberController::class, 'index'])->name('members');
+    Route::POST('/member-store', [MemberController::class, 'addMember'])->name('member.store');
 });
 
 

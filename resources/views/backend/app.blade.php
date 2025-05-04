@@ -19,6 +19,8 @@
     <link rel="stylesheet" type="text/css" href="frontend/css/shohag.css" />
     <link rel="stylesheet" type="text/css" href="frontend/css/style.css" />
     <link rel="stylesheet" type="text/css" href="frontend/css/responsive.css" />
+    <link rel="stylesheet" type="text/css" href="frontend/css/rodro.css" />
+    <link rel="stylesheet" type="text/css" href="frontend/css/mamon.css" />
 </head>
 
 <body>

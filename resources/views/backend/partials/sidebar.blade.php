@@ -87,22 +87,30 @@
                         Current Menu
                     </a>
                 </li>
-                <li class="business_sidebar_menu_list_item">
-                    <a href="/business-new-menu.html" class="business_sidebar_menu_link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25"
-                            viewBox="0 0 24 25" fill="none">
-                            <path d="M8 12.98H16" stroke="#2E1A00" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                            <path d="M12 16.98V8.98004" stroke="#2E1A00" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                            <path
-                                d="M9 22.98H15C20 22.98 22 20.98 22 15.98V9.98004C22 4.98004 20 2.98004 15 2.98004H9C4 2.98004 2 4.98004 2 9.98004V15.98C2 20.98 4 22.98 9 22.98Z"
-                                stroke="#2E1A00" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                        New Menu
-                    </a>
-                </li>
+                @if (Auth::user()->role == 'manager')
+                    <li class="business_sidebar_menu_list_item">
+                        <a href="{{'members'}}" class="business_sidebar_menu_link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25"
+                                viewBox="0 0 24 25" fill="none">
+                                <path d="M8 12.98H16" stroke="#2E1A00" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M12 16.98V8.98004" stroke="#2E1A00" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path
+                                    d="M9 22.98H15C20 22.98 22 20.98 22 15.98V9.98004C22 4.98004 20 2.98004 15 2.98004H9C4 2.98004 2 4.98004 2 9.98004V15.98C2 20.98 4 22.98 9 22.98Z"
+                                    stroke="#2E1A00" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            New Member
+                        </a>
+                    </li>
+                @else
+                    <style>
+                        .business_sidebar_menu_list_item:nth-child(4) {
+                            display: none;
+                        }
+                    </style>
+                @endif
                 <li class="business_sidebar_menu_list_item">
                     <a href="/business-payment-subscription.html" class="business_sidebar_menu_link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25"

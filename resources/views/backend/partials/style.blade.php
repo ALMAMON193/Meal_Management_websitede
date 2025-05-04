@@ -5,4 +5,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/style.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/responsive.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/shohag.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/rodro.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('frontend/css/mamon.css') }}" />
 

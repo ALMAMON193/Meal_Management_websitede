@@ -1,0 +1,247 @@
+.meal-management-content {
+    margin-top: 30px;
+}
+
+.meal-management-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600;
+}
+
+.meal-menu {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.meal-time {
+    flex: 1;
+    min-width: 250px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.meal-time h4 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #444;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.meal-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.meal-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.item-name {
+    font-weight: 500;
+}
+
+.item-quantity {
+    color: #666;
+}
+
+.stats-chart {
+    height: 250px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.chart-placeholder {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    width: 100%;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.chart-bar {
+    flex: 1;
+    background: #6c7ae0;
+    border-radius: 6px 6px 0 0;
+    position: relative;
+    min-height: 30px;
+    display: flex;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.chart-bar.active {
+    background: #4154f1;
+}
+
+.chart-bar:hover {
+    background: #4154f1;
+    cursor: pointer;
+}
+
+.chart-value {
+    position: absolute;
+    top: -25px;
+    font-weight: 600;
+    color: #333;
+}
+
+.chart-bar::after {
+    content: attr(data-day);
+    position: absolute;
+    bottom: -25px;
+    font-size: 14px;
+    color: #666;
+}
+
+.member-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.member-table th,
+.member-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.member-table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #444;
+}
+
+.member-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table-action-btn {
+    background: #4154f1;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.table-action-btn:hover {
+    background: #364dd6;
+}
+
+.meal-management-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.primary-action,
+.secondary-action {
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+}
+
+.primary-action {
+    background: #4154f1;
+    color: white;
+}
+
+.primary-action:hover {
+    background: #364dd6;
+}
+
+.secondary-action {
+    background: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.secondary-action:hover {
+    background: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+    .meal-menu {
+        flex-direction: column;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+ /* Styling for Bazaar List */
+ .bazaar-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.bazaar-card {
+    flex: 1;
+    min-width: 250px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bazaar-card h4 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #444;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.bazaar-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.bazaar-card li {
+    padding: 6px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bazaar-card li span {
+    font-weight: 500;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .bazaar-list {
+        flex-direction: column;
+    }
+}
