@@ -18,12 +18,18 @@ class MemberController extends Controller
     public function index()
     {
         $manager = auth()->user();
+        
+        // Check if the user is a manager
         if ($manager->role !== 'manager') {
             return redirect()->back()->with('error', 'You are not authorized to view this page');
         }
-        $members = $manager->managedMembers()
-
-            ->get();
+    
+        // Get the authenticated user
+        $authUser = User::where('id', Auth::id())->first();
+    
+        // Get the managed members and merge with the authenticated user
+        $members = $manager->managedMembers()->get()->push($authUser);
+    
         return view('backend.layout.pages.add-member', compact('members', 'manager'));
     }
     public function addMember(Request $request)
