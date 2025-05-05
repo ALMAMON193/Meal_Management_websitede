@@ -2,21 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasRoles, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -37,20 +31,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Relationship: A user belongs to a manager
     public function manager()
     {
         return $this->belongsTo(User::class, 'manager_id')->where('role', 'manager');
     }
+
+    // Relationship: A manager has many members
     public function managedMembers()
     {
-        return $this->hasMany(User::class, 'manager_id')
-            ->where('role', 'member');
+        return $this->hasMany(User::class, 'manager_id')->where('role', 'member');
     }
 
-    // Check if user is a member
+    // Check if the user is a member
     public function isMember()
     {
         return $this->role === 'member';
     }
-
 }

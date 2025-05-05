@@ -14,7 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'is.manager' => \App\Http\Middleware\IsManager::class
         ]);
-
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

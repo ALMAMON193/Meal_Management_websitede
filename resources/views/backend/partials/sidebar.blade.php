@@ -68,7 +68,7 @@
                     </a>
                 </li>
                 <li class="business_sidebar_menu_list_item">
-                    <a href="/business-current-menu.html" class="business_sidebar_menu_link">
+                    <a href="{{route('market.list')}}" class="business_sidebar_menu_link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25"
                             viewBox="0 0 24 25" fill="none">
                             <path d="M8 2.98004V5.98004" stroke="#2E1A00" stroke-width="1.5"
@@ -84,12 +84,12 @@
                             <path d="M8 16.98H12" stroke="#2E1A00" stroke-width="1.5" stroke-miterlimit="10"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                        Current Menu
+                        Add Market
                     </a>
                 </li>
                 @if (Auth::user()->role == 'manager')
                     <li class="business_sidebar_menu_list_item">
-                        <a href="{{'members'}}" class="business_sidebar_menu_link">
+                        <a href="{{route('member.list')}}" class="business_sidebar_menu_link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25"
                                 viewBox="0 0 24 25" fill="none">
                                 <path d="M8 12.98H16" stroke="#2E1A00" stroke-width="1.5" stroke-linecap="round"
