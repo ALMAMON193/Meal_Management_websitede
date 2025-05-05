@@ -352,6 +352,73 @@
             border-radius: 8px !important;
             padding: 10px 20px !important;
         }
+        .dashboard-header {
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .dashboard-header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .dashboard-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.025em;
+        }
+
+        .dashboard-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            flex יה1;
+            min-width: 550px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-card h4 {
+            margin: 0 0 0.5rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.8;
+        }
+
+        .stat-card p {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
 
         @media (max-width: 768px) {
             .members-grid {
@@ -363,12 +430,60 @@
                 align-items: flex-start;
                 gap: 15px;
             }
+            .section-title {
+                font-size: 1.25rem;
+            }
+            .add-member-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .stat-card {
+                min-width: 100%;
+            }
+            .dashboard-header {
+                padding: 1rem;
+            }
+            .dashboard-header-content {
+                gap: 0.5rem;
+            }
+            .dashboard-title {
+                font-size: 1.5rem;
+            }
+            .dashboard-stats {
+                gap: 1rem;
+            }
+            .stat-card {
+                padding: 0.75rem 1rem;
+            }
+            .stat-card h4 {
+                font-size: 0.75rem;
+            }
+            .stat-card p {
+                font-size: 1.25rem;
+            }
         }
     </style>
 
     <!-- Include SweetAlert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <div class="business_layout_body">
+        <!-- Dashboard Header with Stats -->
+        <div class="dashboard-header">
+            <div class="dashboard-header-content">
+                <h2 class="dashboard-title">সকল সদস্যের তালিকা</h2>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h4>মোট বাজার</h4>
+                        <p id="total-market-count">5 টি</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>মোট ব্যয়</h4>
+                        <p>৳ 5,250.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="business_layout_body">
         <div class="meal-management-section">
             <div class="section-header">

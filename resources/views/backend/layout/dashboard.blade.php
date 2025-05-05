@@ -1,506 +1,953 @@
 @extends('backend.app')
-@section('title', 'মিল ম্যানেজমেন্ট ড্যাশবোর্ড')
+@section('title', 'বাজার ব্যবস্থাপনা ড্যাশবোর্ড')
 @section('content')
-<style>
-/* Base Styles */
-.business_layout_body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    padding: 15px;
-    background-color: #f8fafc;
-}
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #e0e7ff;
+            --secondary: #10b981;
+            --secondary-light: #d1fae5;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
 
-/* Header Section */
-.dashboard-header {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
-}
+        .business_layout_body {
+            font-family: 'Hind Siliguri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--gray-700);
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            min-height: calc(100vh - 64px);
+        }
 
-.dashboard-card {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-}
+        /* Dashboard Header */
+        .dashboard-header {
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
 
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
 
-.card-title {
-    font-size: 0.9rem;
-    color: #64748b;
-    font-weight: 500;
-}
+        .dashboard-header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-.card-icon {
-    width: 35px;
-    height: 35px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-}
+        .dashboard-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.025em;
+        }
 
-.card-icon svg {
-    width: 18px;
-    height: 18px;
-}
+        .dashboard-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
 
-.card-value {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #1e293b;
-    margin-bottom: 5px;
-}
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            flex: 1;
+            min-width: 180px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
 
-.card-subtext {
-    font-size: 0.8rem;
-    color: #64748b;
-}
+        .stat-card h4 {
+            margin: 0 0 0.5rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.8;
+        }
 
-/* Report Section */
-.report-section {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-bottom: 20px;
-}
+        .stat-card p {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
 
-.report-card {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        /* Action Bar */
+        .action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: stretch;
+        }
 
-.report-title {
-    font-size: 0.9rem;
-    color: #1e293b;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
+        .filter-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            border: 1px solid var(--gray-200);
+        }
 
-.report-btn {
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    border: none;
-    font-weight: 500;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        .filter-group {
+            flex: 1;
+            min-width: 180px;
+        }
 
-.report-btn:hover {
-    background: linear-gradient(135deg, #4338ca, #6d28d9);
-    transform: translateY(-2px);
-}
+        .filter-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+        }
 
-/* Tables and Lists */
-.section-title {
-    font-size: 1.1rem;
-    color: #1e293b;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
+        .filter-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-family: inherit;
+            background-color: white;
+            transition: all 0.2s ease;
+        }
 
-.member-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-}
+        .filter-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            outline: none;
+        }
 
-.member-table th {
-    background: #f1f5f9;
-    padding: 10px 12px;
-    text-align: left;
-    font-weight: 600;
-    color: #475569;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-}
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
 
-.member-table td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #e2e8f0;
-    color: #334155;
-    font-size: 0.85rem;
-    white-space: nowrap;
-}
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+            border: none;
+        }
 
-.member-table tr:last-child td {
-    border-bottom: none;
-}
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 1px 3px 0 rgba(79, 70, 229, 0.2);
+        }
 
-.member-table tr:hover td {
-    background: #f8fafc;
-}
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+        }
 
-/* Bazaar Cards */
-.bazaar-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px;
-}
+        .btn-outline {
+            background: white;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
 
-.bazaar-card {
-    background: white;
-    border-radius: 10px;
-    padding: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
-    overflow: hidden;
-}
+        .btn-outline:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
 
-.bazaar-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
+        .btn-danger {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
 
-.bazaar-card h4 {
-    font-size: 0.95rem;
-    color: #1e293b;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
+        .btn-danger:hover {
+            background: var(--danger);
+            color: white;
+        }
 
-.bazaar-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+        .btn-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+        }
 
-.bazaar-card li {
-    display: flex;
-    margin-bottom: 5px;
-    font-size: 0.8rem;
-    overflow-wrap: break-word;
-    word-break: break-word;
-}
+        /* Market Cards Grid */
+        .markets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
 
-.bazaar-card li:last-child {
-    margin-bottom: 0;
-}
+        .market-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-200);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
 
-.bazaar-card span {
-    font-weight: 500;
-    color: #475569;
-    min-width: 60px;
-    display: inline-block;
-}
+        .market-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
 
-/* Responsive */
-@media (max-width: 1024px) {
-    .dashboard-header {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+        .market-header {
+            padding: 1.25rem;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
 
-@media (max-width: 768px) {
-    .dashboard-header {
-        grid-template-columns: 1fr;
-    }
+        .market-date {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
 
-    .report-section {
-        grid-template-columns: 1fr;
-    }
+        .date-icon {
+            background: var(--primary-light);
+            color: var(--primary);
+            width: 3rem;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.75rem;
+            font-size: 1.25rem;
+        }
 
-    /* Member Table Responsive */
-    .member-table-container {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
-        scrollbar-color: #64748b #e2e8f0;
-    }
+        .date-text {
+            flex: 1;
+        }
 
-    .member-table {
-        min-width: 600px;
-    }
+        .date-text h3 {
+            margin: 0 0 0.25rem;
+            font-size: 1.125rem;
+            color: var(--gray-900);
+        }
 
-    .member-table th,
-    .member-table td {
-        min-width: 100px;
-        padding: 8px 10px;
-        font-size: 0.8rem;
-    }
+        .date-text p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--gray-500);
+        }
 
-    /* Bazaar Grid Responsive */
-    .bazaar-grid {
-        grid-template-columns: 1fr;
-    }
+        .market-body {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .report-btn {
-        padding: 5px 10px;
-    }
-}
+        .market-items {
+            margin-bottom: 1rem;
+            flex: 1;
+        }
 
-@media (max-width: 480px) {
-    .business_layout_body {
-        padding: 10px;
-    }
+        .market-items h4 {
+            margin: 0 0 0.75rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gray-500);
+            font-weight: 600;
+        }
 
-    .card-value {
-        font-size: 1.3rem;
-    }
+        .items-content {
+            background: var(--gray-50);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: var(--gray-700);
+            border: 1px solid var(--gray-200);
+            min-height: 100px;
+            max-height: 150px;
+            overflow-y: auto;
+            white-space: pre-line;
+        }
 
-    .member-table-container {
-        margin: 0 -10px;
-        padding: 0 10px;
-    }
+        .market-price {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .member-table th,
-    .member-table td {
-        min-width: 80px;
-        font-size: 0.75rem;
-        padding: 6px 8px;
-    }
+        .price-label {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
 
-    .report-btn {
-        font-size: 0.75rem;
-        padding: 4px 8px;
-    }
+        .price-amount {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
 
-    .bazaar-card {
-        padding: 10px;
-    }
+        .market-footer {
+            padding: 1rem 1.25rem;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
 
-    .bazaar-card h4 {
-        font-size: 0.9rem;
-        margin-bottom: 8px;
-    }
+        /* Empty State */
+        .empty-state {
+            background: white;
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 1px dashed var(--gray-300);
+            grid-column: 1 / -1;
+        }
 
-    .bazaar-card li {
-        font-size: 0.75rem;
-        margin-bottom: 4px;
-    }
+        .empty-icon {
+            font-size: 3rem;
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+        }
 
-    .bazaar-card span {
-        min-width: 50px;
-    }
-}
+        .empty-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin: 0 0 0.5rem;
+        }
 
-@media (max-width: 320px) { /* iPhone 5 and similar small screens */
-    .member-table th,
-    .member-table td {
-        min-width: 70px;
-        font-size: 0.7rem;
-        padding: 5px 6px;
-    }
+        .empty-text {
+            color: var(--gray-500);
+            margin: 0 0 1.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-    .card-value {
-        font-size: 1.2rem;
-    }
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
 
-    .section-title {
-        font-size: 1rem;
-    }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
-    .bazaar-card {
-        padding: 8px;
-    }
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: var(--shadow-lg);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            max-height: calc(100vh - 40px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
 
-    .bazaar-card h4 {
-        font-size: 0.85rem;
-        margin-bottom: 6px;
-    }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
 
-    .bazaar-card li {
-        font-size: 0.7rem;
-        margin-bottom: 3px;
-    }
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            position: relative;
+        }
 
-    .bazaar-card span {
-        min-width: 45px;
-    }
-}
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--gray-900);
+        }
 
-/* Custom Scrollbar for Webkit Browsers */
-.member-table-container::-webkit-scrollbar {
-    height: 8px;
-}
+        .close-btn {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: var(--gray-100);
+            border: none;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-.member-table-container::-webkit-scrollbar-track {
-    background: #e2e8f0;
-    border-radius: 4px;
-}
+        .close-btn:hover {
+            background: var(--gray-200);
+            color: var(--gray-700);
+        }
 
-.member-table-container::-webkit-scrollbar-thumb {
-    background: #64748b;
-    border-radius: 4px;
-}
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
 
-.member-table-container::-webkit-scrollbar-thumb:hover {
-    background: #475569;
-}
-</style>
+        .modal-footer {
+            padding: 1.25rem 1.5rem;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
 
-<div class="business_layout_body">
-    <!-- Dashboard Header -->
-    <div class="dashboard-header">
-        <div class="dashboard-card">
-            <div class="card-header">
-                <h3 class="card-title">মোট মিল</h3>
-                <div class="card-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-                        <path d="M12.9 6l-1.4 7h-1l-1.4-7h3.8zm-.8-4H9.8L9 4h4l-.9-2zM6 8.5l1.7 8.6c.1.5.5.9 1 .9h6.6c.5 0 .9-.4 1-.9L18 8.5c.1-.5-.3-1-.8-1.1-.1 0-.1 0-.2 0H7c-.6 0-1 .4-1 1 0 0 0 .1 0 .1z"
-                            stroke="white" stroke-width="1.5" fill="white"/>
-                        <path d="M14 18v1c0 1.1-.9 2-2 2s-2-.9-2-2v-1h4zM16 5h6M2 5h6"
-                            stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-family: inherit;
+            background-color: white;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            outline: none;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Flatpickr Customization */
+        .flatpickr-calendar {
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-lg);
+            border: none;
+            font-family: inherit;
+        }
+
+        .flatpickr-day.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .flatpickr-day:hover {
+            background: var(--primary-light);
+        }
+
+        .flatpickr-monthDropdown-months,
+        .flatpickr-monthSelect {
+            font-weight: 600;
+        }
+
+        /* Toast Notifications */
+        .toastify {
+            padding: 1rem 1.5rem;
+            color: white;
+            display: inline-block;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-md);
+            font-size: 0.875rem;
+            max-width: 300px;
+            font-family: inherit;
+        }
+
+        .toast-success {
+            background: linear-gradient(45deg, #10b981, #34d399);
+        }
+
+        .toast-error {
+            background: linear-gradient(45deg, #ef4444, #f87171);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .business_layout_body {
+                padding: 1rem;
+            }
+
+            .dashboard-header {
+                padding: 1.5rem;
+            }
+
+            .dashboard-title {
+                font-size: 1.5rem;
+            }
+
+            .stat-card {
+                min-width: 100%;
+            }
+
+            .filter-card {
+                padding: 1rem;
+            }
+
+            .markets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animated Loading Spinner */
+        .loader {
+            width: 2.5rem;
+            height: 2.5rem;
+            border: 3px solid var(--gray-200);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+            gap: 0.5rem;
+        }
+
+        .pagination-item {
+            min-width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            background: white;
+            border: 1px solid var(--gray-200);
+            color: var(--gray-700);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pagination-item:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-300);
+        }
+
+        .pagination-item.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .pagination-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+
+    <!-- Include SweetAlert, Font Awesome, and Flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Add Hind Siliguri font for better Bangla support -->
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <div class="business_layout_body">
+        <!-- Dashboard Header with Stats -->
+        <div class="dashboard-header">
+            <div class="dashboard-header-content">
+                <h2 class="dashboard-title">বাজার ব্যবস্থাপনা ড্যাশবোর্ড</h2>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h4>মোট বাজার</h4>
+                        <p id="total-market-count">5 টি</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>মোট ব্যয়</h4>
+                        <p>৳ 5,250.00</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>এই মাসের ব্যয়</h4>
+                        <p id="current-month-total">৳ 2,500.00</p>
+                    </div>
                 </div>
             </div>
-            <div class="card-value">357</div>
-            <div class="card-subtext">এই মাসে</div>
         </div>
 
-        <div class="dashboard-card">
-            <div class="card-header">
-                <h3 class="card-title">মোট বাজার</h3>
-                <div class="card-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 15V9M9 10.5h2.25M12.75 10.5H15M7 18.5h10c1.1 0 2-.9 2-2v-9c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2z"
-                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M12 20.5v-2M8 20.5v-2M16 20.5v-2"
-                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+
+        <!-- Markets Grid with Cards -->
+        <div class="markets-grid" id="markets-grid">
+            <div class="market-card" data-id="1" data-date="2023-06-15" data-price="1200.50">
+                <div class="market-header">
+                    <div class="market-date">
+                        <div class="date-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="date-text">
+                            <h3>15 June, 2023</h3>
+                            <p>Thursday</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="market-body">
+                    <div class="market-items">
+                        <h4><i class="fas fa-shopping-basket"></i> বাজারের আইটেম</h4>
+                        <div class="items-content">- মাছ: 1kg (500৳)
+                            - চাল: 5kg (300৳)
+                            - ডাল: 2kg (200৳)
+                            - সবজি: 200৳</div>
+                    </div>
+                    <div class="market-price">
+                        <div class="price-label">মোট খরচ:</div>
+                        <div class="price-amount">৳ 1,200.50</div>
+                    </div>
+                </div>
+                <div class="market-footer">
+                    <button class="btn btn-outline btn-icon" onclick="editMarket(1)" title="সম্পাদনা করুন">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger btn-icon" onclick="confirmDeleteMarket(1)" title="মুছে ফেলুন">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
             </div>
-            <div class="card-value">৳15,750</div>
-            <div class="card-subtext">এই মাসে</div>
-        </div>
 
-        <div class="dashboard-card">
-            <div class="card-header">
-                <h3 class="card-title">মিল রেট</h3>
-                <div class="card-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path
-                            d="M20 8.25V18C20 21 18.21 22 16 22H8C5.79 22 4 21 4 18V8.25C4 5 5.79 4.25 8 4.25C8 4.87 8.24997 5.43 8.65997 5.84C9.06997 6.25 9.63 6.5 10.25 6.5H13.75C14.99 6.5 16 5.49 16 4.25C18.21 4.25 20 5 20 8.25Z"
-                            stroke="white" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path
-                            d="M16 4.25C16 5.49 14.99 6.5 13.75 6.5H10.25C9.63 6.5 9.06997 6.25 8.65997 5.84C8.24997 5.43 8 4.87 8 4.25C8 3.01 9.01 2 10.25 2H13.75C14.37 2 14.93 2.25 15.34 2.66C15.75 3.07 16 3.63 16 4.25Z"
-                            stroke="white" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M8 13H12" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M8 17H16" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
+            <div class="market-card" data-id="2" data-date="2023-06-10" data-price="850.00">
+                <div class="market-header">
+                    <div class="market-date">
+                        <div class="date-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="date-text">
+                            <h3>10 June, 2023</h3>
+                            <p>Saturday</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="market-body">
+                    <div class="market-items">
+                        <h4><i class="fas fa-shopping-basket"></i> বাজারের আইটেম</h4>
+                        <div class="items-content">- মুরগি: 1kg (350৳)
+                            - ডিম: 12pcs (120৳)
+                            - তেল: 1L (150৳)
+                            - পেঁয়াজ: 1kg (80৳)
+                            - রসুন: 250g (50৳)
+                            - মসলা: 100৳</div>
+                    </div>
+                    <div class="market-price">
+                        <div class="price-label">মোট খরচ:</div>
+                        <div class="price-amount">৳ 850.00</div>
+                    </div>
+                </div>
+                <div class="market-footer">
+                    <button class="btn btn-outline btn-icon" onclick="editMarket(2)" title="সম্পাদনা করুন">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger btn-icon" onclick="confirmDeleteMarket(2)" title="মুছে ফেলুন">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
             </div>
-            <div class="card-value">৳3,450</div>
-            <div class="card-subtext">বর্তমান রেট</div>
+
+            <div class="market-card" data-id="3" data-date="2023-06-05" data-price="450.00">
+                <div class="market-header">
+                    <div class="market-date">
+                        <div class="date-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="date-text">
+                            <h3>05 June, 2023</h3>
+                            <p>Monday</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="market-body">
+                    <div class="market-items">
+                        <h4><i class="fas fa-shopping-basket"></i> বাজারের আইটেম</h4>
+                        <div class="items-content">- দুধ: 2L (120৳)
+                            - রুটি: 10pcs (50৳)
+                            - কলা: 1dozen (80৳)
+                            - আপেল: 4pcs (100৳)
+                            - বিস্কুট: 100৳</div>
+                    </div>
+                    <div class="market-price">
+                        <div class="price-label">মোট খরচ:</div>
+                        <div class="price-amount">৳ 450.00</div>
+                    </div>
+                </div>
+                <div class="market-footer">
+                    <button class="btn btn-outline btn-icon" onclick="editMarket(3)" title="সম্পাদনা করুন">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-danger btn-icon" onclick="confirmDeleteMarket(3)" title="মুছে ফেলুন">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <div class="pagination-item disabled">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="pagination-item active">1</div>
+            <div class="pagination-item">2</div>
+            <div class="pagination-item">
+                <i class="fas fa-chevron-right"></i>
+            </div>
         </div>
     </div>
 
-    <!-- Report Section -->
-    <div class="report-section">
-        <div class="report-card">
-            <div>
-                <h3 class="report-title">পূর্ববর্তী মিল রিপোর্ট</h3>
-                <p class="card-subtext">গত মাসের মিল রিপোর্ট দেখুন</p>
+    <!-- Add/Edit Market Modal (Hidden by default) -->
+    <div class="modal-overlay" id="marketModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">নতুন বাজার যোগ করুন</h3>
+                <button class="close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <button class="report-btn">দেখুন</button>
-        </div>
-
-        <div class="report-card">
-            <div>
-                <h3 class="report-title">নতুন মেনু সংযোজন</h3>
-                <p class="card-subtext">এই সপ্তাহের মেনু যোগ করুন</p>
+            <div class="modal-body">
+                <form id="marketForm">
+                    <input type="hidden" id="marketId">
+                    <div class="form-group">
+                        <label for="bazaar_date">তারিখ</label>
+                        <input type="text" id="bazaar_date" class="form-control" placeholder="তারিখ নির্বাচন করুন"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="item_details">বাজারের আইটেম</label>
+                        <textarea id="item_details" class="form-control" placeholder="প্রতিটি আইটেম নতুন লাইনে লিখুন (যেমন: মাছ - 500৳)"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="total_price">মোট মূল্য (৳)</label>
+                        <input type="number" id="total_price" class="form-control" placeholder="মোট মূল্য"
+                            step="0.01" required>
+                    </div>
+                </form>
             </div>
-            <button class="report-btn">যোগ করুন</button>
-        </div>
-    </div>
-
-    <!-- Member List Section -->
-    <div class="meal-management-section">
-        <h3 class="section-title">সদস্য তালিকা</h3>
-        <div class="member-table-container">
-            <table class="member-table">
-                <thead>
-                    <tr>
-                        <th>সদস্য নাম</th>
-                        <th>মোট মিল</th>
-                        <th>মিল বাজার</th>
-                        <th>মিল ব্যালেন্স</th>
-                        <th>সম্পাদনা</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>আবদুল করিম</td>
-                        <td>45</td>
-                        <td>৳60</td>
-                        <td>৳3,000</td>
-                        <td><button class="report-btn" style="padding: 5px 10px; font-size: 0.8rem;">সম্পাদনা</button></td>
-                    </tr>
-                    <tr>
-                        <td>রফিক ইসলাম</td>
-                        <td>42</td>
-                        <td>৳60</td>
-                        <td>৳2,800</td>
-                        <td><button class="report-btn" style="padding: 5px 10px; font-size: 0.8rem;">সম্পাদনা</button></td>
-                    </tr>
-                    <tr>
-                        <td>মাহফুজুর রহমান</td>
-                        <td>48</td>
-                        <td>৳60</td>
-                        <td>৳3,200</td>
-                        <td><button class="report-btn" style="padding: 5px 10px; font-size: 0.8rem;">সম্পাদনা</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Bazaar List Section -->
-    <div class="meal-management-section">
-        <h3 class="section-title">বাজারের তালিকা</h3>
-        <div class="bazaar-grid">
-            <div class="bazaar-card">
-                <h4>আবদুল করিমের বাজার</h4>
-                <ul>
-                    <li><span>তারিখ:</span> 2025-05-01</li>
-                    <li><span>মোট খরচ:</span> ৳2,500</li>
-                    <li><span>আইটেম:</span> চাল, ডাল, তেল</li>
-                </ul>
-            </div>
-            <div class="bazaar-card">
-                <h4>রফিক ইসলামের বাজার</h4>
-                <ul>
-                    <li><span>তারিখ:</span> 2025-05-02</li>
-                    <li><span>মোট খরচ:</span> ৳3,000</li>
-                    <li><span>আইটেম:</span> মাছ, মাংস, সবজি</li>
-                </ul>
-            </div>
-            <div class="bazaar-card">
-                <h4>মাহফুজুর রহমানের বাজার</h4>
-                <ul>
-                    <li><span>তারিখ:</span> 2025-05-03</li>
-                    <li><span>মোট খরচ:</span> ৳2,800</li>
-                    <li><span>আইটেম:</span> ডিম, দুধ, মশলা</li>
-                </ul>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">বাতিল করুন</button>
+                <button class="btn btn-primary" id="saveMarketBtn" onclick="saveMarket()">সংরক্ষণ করুন</button>
             </div>
         </div>
     </div>
-</div>
+
+    <script>
+        // Initialize date picker
+        flatpickr("#bazaar_date", {
+            dateFormat: "Y-m-d",
+            defaultDate: "today"
+        });
+
+        flatpickr("#filter_calendar", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            onClose: function(selectedDates, dateStr, instance) {
+                if (selectedDates.length === 2) {
+                    filterMarketsByDate(selectedDates[0], selectedDates[1]);
+                    document.getElementById('clearFilterBtn').style.display = 'inline-flex';
+                }
+            }
+        });
+
+        // Modal functions
+        function openBazaarModal(marketId = null) {
+            const modal = document.getElementById('marketModal');
+            const form = document.getElementById('marketForm');
+
+            if (marketId) {
+                document.getElementById('modalTitle').textContent = 'বাজার সম্পাদনা করুন';
+                document.getElementById('marketId').value = marketId;
+
+                // Here you would typically fetch the market data and populate the form
+                // For static demo, we'll just set some values
+                document.getElementById('bazaar_date').value = '2023-06-15';
+                document.getElementById('item_details').value =
+                    '- মাছ: 1kg (500৳)\n- চাল: 5kg (300৳)\n- ডাল: 2kg (200৳)\n- সবজি: 200৳';
+                document.getElementById('total_price').value = '1200.50';
+            } else {
+                document.getElementById('modalTitle').textContent = 'নতুন বাজার যোগ করুন';
+                form.reset();
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('marketModal').classList.remove('active');
+        }
+
+        function saveMarket() {
+            // Here you would typically save the data via AJAX
+            // For static demo, we'll just show a success message
+            Toastify({
+                text: "বাজার তথ্য সফলভাবে সংরক্ষণ করা হয়েছে!",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                className: "toast-success"
+            }).showToast();
+
+            closeModal();
+        }
+
+        function editMarket(marketId) {
+            openBazaarModal(marketId);
+        }
+
+        function confirmDeleteMarket(marketId) {
+            Swal.fire({
+                title: 'আপনি কি নিশ্চিত?',
+                text: "আপনি এই বাজার তথ্য মুছে ফেলতে চান?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'হ্যাঁ, মুছে ফেলুন!',
+                cancelButtonText: 'বাতিল করুন'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Here you would typically delete the record via AJAX
+                    // For static demo, we'll just show a success message
+                    Swal.fire(
+                        'মুছে ফেলা হয়েছে!',
+                        'বাজার তথ্য সফলভাবে মুছে ফেলা হয়েছে।',
+                        'success'
+                    );
+                }
+            });
+        }
+
+        function filterMarketsByDate(startDate, endDate) {
+            // In a real app, this would filter the markets via AJAX
+            // For static demo, we'll just show a message
+            Toastify({
+                text: `Showing markets from ${startDate.toDateString()} to ${endDate.toDateString()}`,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                className: "toast-success"
+            }).showToast();
+        }
+
+        document.getElementById('clearFilterBtn').addEventListener('click', function() {
+            document.getElementById('filter_calendar').value = '';
+            document.getElementById('clearFilterBtn').style.display = 'none';
+
+            // In a real app, this would reset the markets list
+            Toastify({
+                text: "ফিল্টার সাফ করা হয়েছে",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                className: "toast-success"
+            }).showToast();
+        });
+    </script>
 @endsection
