@@ -12,18 +12,22 @@ use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
-    //create an constructor
-
 
     public function index()
     {
-        $manager = auth()->user();
+        // Get the authenticated user (manager)
+        $manager = Auth::user();
+        // Check if the user is a manager
         if ($manager->role !== 'manager') {
             return redirect()->back()->with('error', 'You are not authorized to view this page');
         }
-        $members = $manager->managedMembers()
+        // Fetch members managed by this manager
+        $members = $manager->managedMembers()->get();
 
-            ->get();
+        // Always include the manager in the members collection
+        $members = $members->prepend($manager);
+
+        // Pass members (including manager) to the view
         return view('backend.layout.pages.add-member', compact('members', 'manager'));
     }
     public function addMember(Request $request)
