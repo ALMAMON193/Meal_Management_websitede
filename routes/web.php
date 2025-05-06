@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/meals', [MealController::class, 'index'])->name('meal.list');
     Route::post('/meals', [MealController::class, 'store'])->name('meals.store');
+    Route::get('/meals/data', [MealController::class, 'getMealData'])->name('meals.data');
 
 });
 

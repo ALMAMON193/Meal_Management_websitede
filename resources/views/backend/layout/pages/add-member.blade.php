@@ -402,7 +402,7 @@
             padding: 1rem 1.5rem;
             border-radius: 0.75rem;
             flex יה1;
-            min-width: 550px;
+            min-width: 700px;
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
