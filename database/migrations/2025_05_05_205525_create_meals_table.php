@@ -13,10 +13,17 @@ return new class extends Migration
     {
         Schema::create('meals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
             $table->date('date');
-            $table->decimal('meal_count', 3, 1);
+            $table->decimal('breakfast', 4, 1)->default(0.0);
+            $table->decimal('lunch', 4, 1)->default(0.0);
+            $table->decimal('dinner', 4, 1)->default(0.0);
+            $table->decimal('meal_count', 4, 1)->storedAs('breakfast + lunch + dinner');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unique(['user_id', 'date']);
+          
         });
     }
 
