@@ -12,6 +12,20 @@ use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {
+    public function allIndex(Request $request)
+    {
+        $allmeals = Meal::whereYear('date', now()->year)
+                      ->whereMonth('date', now()->month)
+                      ->get();
+
+        //total meal this month
+        $totalMeals = $allmeals->sum('meal_count');
+        $totalMembers = User::where('role', '!=', 'manager')->count();
+        $averageMealRate = $totalMembers > 0 ? ($totalMeals / $totalMembers) * 100 : 0;
+        $averageMealRate = round($averageMealRate, 2);
+
+        return view('backend.layout.pages.all-meal', compact('allmeals','totalMeals','averageMealRate'));
+    }
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -40,47 +54,29 @@ class MealController extends Controller
 
         return view('backend.layout.pages.meal', compact('members', 'meals', 'totalMeals', 'averageMealRate', 'selectedDate'));
     }
+    // In your controller
     public function store(Request $request)
     {
-        try {
-            $user = Auth::user();
-            if ($user->role !== 'manager') {
-                return response()->json(['error' => 'Unauthorized'], 403);
-            }
+        $date = $request->input('date');
+        $meals = $request->input('meals');
 
-            $request->validate([
-                'date' => 'required|date',
-                'meals' => 'required|array',
-                'meals.*' => 'array|size:3',
-                'meals.*.*' => 'numeric|min:0|max:9',
-            ]);
+        foreach ($meals as $userId => $mealData) {
+            $mealCount = array_sum($mealData);
 
-            $date = $request->input('date');
-            $mealData = $request->input('meals');
-
-            $isUpdate = Meal::where('date', $date)->exists();
-
-            foreach ($mealData as $userId => $meals) {
-                [$breakfast, $lunch, $dinner] = $meals;
-                Meal::updateOrCreate(
-                    ['user_id' => $userId, 'date' => $date],
-                    [
-                        'breakfast' => $breakfast,
-                        'lunch' => $lunch,
-                        'dinner' => $dinner
-                    ]
-                );
-            }
-
-            return response()->json([
-                'message' => $isUpdate ? 'Meal data updated successfully' : 'Meal data saved successfully',
-                'isUpdate' => $isUpdate
-            ], 200);
-        } catch (\Exception $e) {
-            Log::error('Error in meals.store: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to save meal data'], 500);
+            Meal::updateOrCreate(
+                [
+                    'user_id' => $userId,
+                    'date' => $date,
+                ],
+                [
+                    'meal_count' => $mealCount,
+                ]
+            );
         }
+
+        return redirect()->back();
     }
+
     public function getMealData(Request $request)
     {
         try {
