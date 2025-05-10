@@ -562,130 +562,79 @@
                 </div>
             </div>
         </div>
+{{$errors}}
+     <form method="POST" action="{{route('meal.store')}}" class="meal-attendance-container">
+    @csrf
+    <!-- Date Selector -->
+    <div class="date-selector">
+        <label for="meal-date"><i class="fas fa-calendar-alt"></i> তারিখ নির্বাচন করুন:</label>
+        <input type="date" id="meal-date" name="date" value="{{ $selectedDate ?? now()->toDateString() }}">
+    </div>
 
-        <div class="meal-attendance-container" id="mealContainer">
-            <!-- Date Selector -->
-            <div class="date-selector">
-                <label for="meal-date"><i class="fas fa-calendar-alt"></i> তারিখ নির্বাচন করুন:</label>
-                <input type="date" id="meal-date" value="{{ $selectedDate }}" max="">
-                <button class="search-btn" onclick="loadMealData()" aria-label="খুঁজুন">
-                    <i class="fas fa-search"></i> খুঁজুন
-                </button>
-            </div>
-
-            <!-- Meal Table -->
-            <div class="table-container">
-                <div class="table-header">
-                    <h3><i class="fas fa-utensils"></i> মিল উপস্থিতি তালিকা</h3>
-                </div>
-                <div class="table-responsive">
-                    <table class="meal-table" id="mealTable">
-                        <thead>
-                            <tr>
-                                <th>সদস্য</th>
-                                <th>সকালের নাস্তা</th>
-                                <th>দুপুরের খাবার</th>
-                                <th>রাতের খাবার</th>
-                                <th>মোট মিল</th>
-                                <th>স্ট্যাটাস</th>
-                            </tr>
-                        </thead>
-                        <tbody id="mealTableBody">
-                            @foreach ($members as $member)
-                                <tr data-user-id="{{ $member->id }}">
-                                    <td>
-                                        <div class="member-name">
-                                            <div class="member-avatar">{{ substr($member->name, 0, 1) }}</div>
-                                            {{ $member->name }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="meal-select-container">
-                                            <span class="meal-label">সকালের নাস্তা</span>
-                                            <select class="meal-select breakfast" id="breakfast-{{ $member->id }}"
-                                                onchange="updateTotalMeal({{ $member->id }})">
-                                                <option value="0">0</option>
-                                                <option value="0.5">0.5</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="meal-select-container">
-                                            <span class="meal-label">দুপুরের খাবার</span>
-                                            <select class="meal-select lunch" id="lunch-{{ $member->id }}"
-                                                onchange="updateTotalMeal({{ $member->id }})">
-                                                <option value="0">0</option>
-                                                <option value="0.5">0.5</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="meal-select-container">
-                                            <span class="meal-label">রাতের খাবার</span>
-                                            <select class="meal-select dinner" id="dinner-{{ $member->id }}"
-                                                onchange="updateTotalMeal({{ $member->id }})">
-                                                <option value="0">0</option>
-                                                <option value="0.5">0.5</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td class="total-meal-value" id="total-meal-{{ $member->id }}">
-                                        {{ isset($meals[$member->id]) ? $meals[$member->id]->meal_count : '0.0' }}
-                                    </td>
-                                    <td>
-                                        <span
-                                            class="status-badge {{ isset($meals[$member->id]) && $meals[$member->id]->meal_count > 0 ? 'present' : 'absent' }}"
-                                            id="status-{{ $member->id }}">
-                                            {{ isset($meals[$member->id]) && $meals[$member->id]->meal_count > 0 ? 'উপস্থিত' : 'অনুপস্থিত' }}
-                                        </span>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="action-buttons">
-                <button class="reset-btn" onclick="resetForm()" aria-label="রিসেট করুন">
-                    <i class="fas fa-undo"></i> রিসেট করুন
-                </button>
-                <button class="save-btn" id="saveBtn" onclick="saveMealData()" aria-label="সেভ করুন">
-                    <i class="fas fa-save"></i> সেভ করুন
-                </button>
-            </div>
+    <!-- Meal Table - Keep your original design -->
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="meal-table" id="mealTable">
+                <tbody id="mealTableBody">
+                    @foreach ($users as $user)
+                        <tr data-user-id="{{ $user->id }}">
+                            <td>
+                                <div class="member-name">
+                                    <div class="member-avatar">{{ substr($user->name, 0, 1) }}</div>
+                                    {{ $user->name }}
+                                </div>
+                            </td>
+                            <!-- Breakfast -->
+                            <td>
+                                <div class="meal-select-container">
+                                    <span class="meal-label">সকালের নাস্তা</span>
+                                    <select class="meal-select breakfast" name="meals[{{ $user->id }}][breakfast]">
+                                        <option value="0">0</option>
+                                        <option value="0.5">0.5</option>
+                                        <option value="1" selected>1</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <!-- Lunch -->
+                            <td>
+                                <div class="meal-select-container">
+                                    <span class="meal-label">দুপুরের খাবার</span>
+                                    <select class="meal-select lunch" name="meals[{{ $user->id }}][lunch]">
+                                        <option value="0">0</option>
+                                        <option value="0.5">0.5</option>
+                                        <option value="1" selected>1</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <!-- Dinner -->
+                            <td>
+                                <div class="meal-select-container">
+                                    <span class="meal-label">রাতের খাবার</span>
+                                    <select class="meal-select dinner" name="meals[{{ $user->id }}][dinner]">
+                                        <option value="0">0</option>
+                                        <option value="0.5">0.5</option>
+                                        <option value="1" selected>1</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <!-- Hidden user_id field -->
+                            <input type="hidden" name="meals[{{ $user->id }}][user_id]" value="{{ $user->id }}">
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
+    </div>
 
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button type="submit" class="save-btn">
+            <i class="fas fa-save"></i> সেভ করুন
+        </button>
+    </div>
+</form>
         <!-- Summary Section -->
-        <div class="summary-section">
+        {{-- <div class="summary-section">
             <!-- Attendance Summary -->
             <div class="summary-card">
                 <div class="summary-header">
@@ -745,511 +694,7 @@
                     <canvas id="mealDistributionChart" class="meal-distribution"></canvas>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
-    <script>
-        // Notification Queue Management
-        let notificationQueue = [];
-        let isShowingNotification = false;
-
-        // Initialize on DOM load
-        document.addEventListener('DOMContentLoaded', function () {
-            // Set default date to today if empty
-            const mealDateInput = document.getElementById('meal-date');
-            if (!mealDateInput.value) {
-                mealDateInput.value = new Date().toISOString().split('T')[0];
-            }
-            // Set max date to today to disable future dates
-            mealDateInput.setAttribute('max', new Date().toISOString().split('T')[0]);
-
-            loadMealData(); // Load data on page load
-        });
-
-        // Load meal data for selected date
-        function loadMealData() {
-            const date = document.getElementById('meal-date').value;
-            const searchBtn = document.querySelector('.search-btn');
-
-            if (!date) {
-                showNotification('তারিখ নির্বাচন করুন', 'error');
-                return;
-            }
-
-            const tableBody = document.getElementById('mealTableBody');
-            if (!tableBody) {
-                console.error('Table body not found');
-                showNotification('UI ত্রুটি: টেবিল লোড করা যায়নি', 'error');
-                return;
-            }
-
-            tableBody.innerHTML = `
-                <tr>
-                    <td colspan="6" style="text-align: center; padding: 30px;">
-                        <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: #6366f1;"></i>
-                        <p style="margin-top: 10px; color: #6b7280;">তথ্য লোড হচ্ছে...</p>
-                    </td>
-                </tr>
-            `;
-            searchBtn.disabled = true;
-
-            fetch(`{{ route('meals.data') }}?date=${date}`, {
-                method: 'GET',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                }
-            })
-                .then(response => {
-                    console.log('loadMealData fetch status:', response.status, response.statusText);
-                    if (!response.ok) {
-                        return response.text().then(text => {
-                            try {
-                                const json = JSON.parse(text);
-                                throw new Error(json.error || `HTTP error ${response.status}`);
-                            } catch {
-                                throw new Error(`HTTP error ${response.status}: ${text}`);
-                            }
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Loaded data:', data);
-                    if (data.error) {
-                        showNotification(data.error, 'error');
-                        return;
-                    }
-
-                    // Update dashboard stats
-                    document.getElementById('total-meal-count').textContent = data.totalMeals.toFixed(1);
-                    document.getElementById('attendance-rate').textContent = `${data.averageMealRate}%`;
-
-                    // Update summary card
-                    document.getElementById('total-members').textContent = `${data.totalMembers} জন`;
-                    document.getElementById('present-count').textContent = `${data.presentCount} জন`;
-                    document.getElementById('absent-count').textContent = `${data.absentCount} জন`;
-                    document.getElementById('total-meal-summary').textContent = data.totalMeals.toFixed(1);
-
-                    // Update meal table
-                    tableBody.innerHTML = '';
-                    data.members.forEach(member => {
-                        const meal = data.meals[member.id] || {
-                            meal_count: 0,
-                            breakfast: 0,
-                            lunch: 0,
-                            dinner: 0
-                        };
-                        // Ensure meal_count is a number
-                        const mealCount = typeof meal.meal_count === 'number' ? meal.meal_count : 0;
-                        if (typeof meal.meal_count !== 'number') {
-                            console.warn(`Invalid meal_count for user ${member.id}:`, meal.meal_count);
-                        }
-
-                        const row = `
-                            <tr data-user-id="${member.id}">
-                                <td>
-                                    <div class="member-name">
-                                        <div class="member-avatar">${member.name.charAt(0)}</div>
-                                        ${member.name}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="meal-select-container">
-                                        <span class="meal-label">সকালের নাস্তা</span>
-                                        <select class="meal-select breakfast" id="breakfast-${member.id}" onchange="updateTotalMeal(${member.id})">
-                                            ${generateMealOptions(meal.breakfast)}
-                                        </select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="meal-select-container">
-                                        <span class="meal-label">দুপুরের খাবার</span>
-                                        <select class="meal-select lunch" id="lunch-${member.id}" onchange="updateTotalMeal(${member.id})">
-                                            ${generateMealOptions(meal.lunch)}
-                                        </select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="meal-select-container">
-                                        <span class="meal-label">রাতের খাবার</span>
-                                        <select class="meal-select dinner" id="dinner-${member.id}" onchange="updateTotalMeal(${member.id})">
-                                            ${generateMealOptions(meal.dinner)}
-                                        </select>
-                                    </div>
-                                </td>
-                                <td class="total-meal-value" id="total-meal-${member.id}">${mealCount.toFixed(1)}</td>
-                                <td>
-                                    <span class="status-badge ${mealCount > 0 ? 'present' : 'absent'}" id="status-${member.id}">
-                                        ${mealCount > 0 ? 'উপস্থিত' : 'অনুপস্থিত'}
-                                    </span>
-                                </td>
-                            </tr>
-                        `;
-                        tableBody.insertAdjacentHTML('beforeend', row);
-                    });
-
-                    calculateMealDistribution();
-                    initializeChart();
-                    showNotification('সফলভাবে লোড হয়েছে', 'success');
-                })
-                .catch(error => {
-                    console.error('Error loading meal data:', error.message);
-                    showNotification(`তথ্য লোড করতে ব্যর্থ: ${error.message}`, 'error');
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="6" style="text-align: center; padding: 30px; color: #991b1b;">
-                                তথ্য লোড করতে ব্যর্থ। দয়া করে আবার চেষ্টা করুন।
-                            </td>
-                        </tr>
-                    `;
-                })
-                .finally(() => {
-                    searchBtn.disabled = false;
-                });
-        }
-
-        // Generate meal dropdown options
-        function generateMealOptions(selectedValue) {
-            const options = [];
-            const values = [0, 0.5, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-            for (const value of values) {
-                options.push(`<option value="${value}" ${value === parseFloat(selectedValue) ? 'selected' : ''}>${value}</option>`);
-            }
-            return options.join('');
-        }
-
-        // Update total meal for a member
-        function updateTotalMeal(userId) {
-            const breakfastSelect = document.getElementById(`breakfast-${userId}`);
-            const lunchSelect = document.getElementById(`lunch-${userId}`);
-            const dinnerSelect = document.getElementById(`dinner-${userId}`);
-            const totalMealElement = document.getElementById(`total-meal-${userId}`);
-            const statusBadge = document.getElementById(`status-${userId}`);
-
-            if (!breakfastSelect || !lunchSelect || !dinnerSelect || !totalMealElement || !statusBadge) {
-                showNotification('UI ত্রুটি: মিল ডেটা লোড করা যায়নি', 'error');
-                return;
-            }
-
-            const breakfast = parseFloat(breakfastSelect.value) || 0;
-            const lunch = parseFloat(lunchSelect.value) || 0;
-            const dinner = parseFloat(dinnerSelect.value) || 0;
-            const totalMeal = breakfast + lunch + dinner;
-
-            totalMealElement.textContent = totalMeal.toFixed(1);
-            statusBadge.textContent = totalMeal > 0 ? 'উপস্থিত' : 'অনুপস্থিত';
-            statusBadge.className = `status-badge ${totalMeal > 0 ? 'present' : 'absent'}`;
-
-            document.getElementById('saveBtn').disabled = false;
-            calculateMealDistribution();
-        }
-
-        // Calculate meal distribution and update chart
-        function calculateMealDistribution() {
-            let breakfastTotal = 0;
-            let lunchTotal = 0;
-            let dinnerTotal = 0;
-
-            document.querySelectorAll('#mealTableBody tr').forEach(row => {
-                const userId = row.dataset.userId;
-                if (!userId) return;
-
-                const breakfastSelect = document.getElementById(`breakfast-${userId}`);
-                const lunchSelect = document.getElementById(`lunch-${userId}`);
-                const dinnerSelect = document.getElementById(`dinner-${userId}`);
-
-                if (breakfastSelect && lunchSelect && dinnerSelect) {
-                    breakfastTotal += parseFloat(breakfastSelect.value) || 0;
-                    lunchTotal += parseFloat(lunchSelect.value) || 0;
-                    dinnerTotal += parseFloat(dinnerSelect.value) || 0;
-                }
-            });
-
-            const breakfastTotalElement = document.getElementById('breakfast-total');
-            const lunchTotalElement = document.getElementById('lunch-total');
-            const dinnerTotalElement = document.getElementById('dinner-total');
-            const mealDistributionTotalElement = document.getElementById('meal-distribution-total');
-
-            if (breakfastTotalElement && lunchTotalElement && dinnerTotalElement && mealDistributionTotalElement) {
-                breakfastTotalElement.textContent = breakfastTotal.toFixed(1);
-                lunchTotalElement.textContent = lunchTotal.toFixed(1);
-                dinnerTotalElement.textContent = dinnerTotal.toFixed(1);
-                mealDistributionTotalElement.textContent = (breakfastTotal + lunchTotal + dinnerTotal).toFixed(1);
-            }
-
-            updateChart(breakfastTotal, lunchTotal, dinnerTotal);
-        }
-
-        // Reset form with confirmation
-        function resetForm() {
-            Swal.fire({
-                title: 'আপনি কি নিশ্চিত?',
-                text: 'আপনি কি সত্যিই সমস্ত মিল ডেটা রিসেট করতে চান? এই কাজটি পূর্বাবস্থায় ফিরিয়ে আনা যাবে না!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'হ্যাঁ, রিসেট করুন!',
-                cancelButtonText: 'বাতিল করুন',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: 'রিসেট হচ্ছে...',
-                        allowOutsideClick: false,
-                        didOpen: () => Swal.showLoading()
-                    });
-
-                    document.querySelectorAll('#mealTableBody tr').forEach(row => {
-                        const userId = row.dataset.userId;
-                        if (!userId) return;
-
-                        const breakfastSelect = document.getElementById(`breakfast-${userId}`);
-                        const lunchSelect = document.getElementById(`lunch-${userId}`);
-                        const dinnerSelect = document.getElementById(`dinner-${userId}`);
-
-                        if (breakfastSelect && lunchSelect && dinnerSelect) {
-                            breakfastSelect.value = '0';
-                            lunchSelect.value = '0';
-                            dinnerSelect.value = '0';
-                            updateTotalMeal(userId);
-                        }
-                    });
-
-                    Swal.fire('রিসেট করা হয়েছে!', 'সমস্ত মিল ডেটা সফলভাবে রিসেট করা হয়েছে।', 'success');
-                }
-            });
-        }
-
-        // Check if data exists for a date
-        async function checkDataExists(date) {
-            try {
-                const response = await fetch(`{{ route('meals.data') }}?date=${date}`, {
-                    method: 'GET',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                        'Accept': 'application/json'
-                    }
-                });
-                console.log('checkDataExists fetch status:', response.status, response.statusText);
-                if (!response.ok) {
-                    return response.text().then(text => {
-                        try {
-                            const json = JSON.parse(text);
-                            throw new Error(json.error || `HTTP error ${response.status}`);
-                        } catch {
-                            throw new Error(`HTTP error ${response.status}: ${text}`);
-                        }
-                    });
-                }
-                const data = await response.json();
-                console.log('Check data exists response:', data);
-                return data.meals && Object.keys(data.meals).length > 0;
-            } catch (error) {
-                console.error('Error checking data existence:', error.message);
-                showNotification(`তথ্য যাচাই করতে সমস্যা: ${error.message}`, 'error');
-                return false;
-            }
-        }
-
-        // Save meal data with confirmation for updates
-        async function saveMealData() {
-            const date = document.getElementById('meal-date').value;
-            const saveBtn = document.getElementById('saveBtn');
-
-            if (!date) {
-                showNotification('তারিখ নির্বাচন করুন', 'error');
-                return;
-            }
-
-            if (!saveBtn) {
-                console.error('Save button not found');
-                return;
-            }
-
-            // Collect meal data
-            const mealData = {};
-            let hasData = false;
-
-            document.querySelectorAll('#mealTableBody tr').forEach(row => {
-                const userId = row.dataset.userId;
-                if (!userId) return;
-
-                const breakfastSelect = document.getElementById(`breakfast-${userId}`);
-                const lunchSelect = document.getElementById(`lunch-${userId}`);
-                const dinnerSelect = document.getElementById(`dinner-${userId}`);
-
-                if (breakfastSelect && lunchSelect && dinnerSelect) {
-                    const breakfast = parseFloat(breakfastSelect.value) || 0;
-                    const lunch = parseFloat(lunchSelect.value) || 0;
-                    const dinner = parseFloat(dinnerSelect.value) || 0;
-                    if (breakfast || lunch || dinner) {
-                        mealData[userId] = [breakfast, lunch, dinner];
-                        hasData = true;
-                    }
-                }
-            });
-
-            if (!hasData) {
-                showNotification('কোনো মিল ডেটা নেই', 'error');
-                return;
-            }
-
-            console.log('Meal data to save:', { date, meals: mealData });
-
-            // Check if data exists for the date
-            const dataExists = await checkDataExists(date);
-
-            if (dataExists) {
-                // Show confirmation dialog for update
-                const result = await Swal.fire({
-                    title: 'আপনি কি নিশ্চিত?',
-                    text: 'এই তারিখের জন্য ডেটা ইতিমধ্যে সংরক্ষিত আছে। আপডেট করতে চান? এটি পূর্বের ডেটা প্রতিস্থাপন করবে!',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'হ্যাঁ, আপডেট করুন!',
-                    cancelButtonText: 'বাতিল করুন',
-                    reverseButtons: true
-                });
-
-                if (!result.isConfirmed) {
-                    return;
-                }
-            }
-
-            // Proceed with saving
-            saveBtn.disabled = true;
-            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> সেভ হচ্ছে...';
-
-            fetch('{{ route('meals.store') }}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({ date, meals: mealData })
-            })
-                .then(response => {
-                    console.log('saveMealData fetch status:', response.status, response.statusText);
-                    if (!response.ok) {
-                        return response.text().then(text => {
-                            try {
-                                const json = JSON.parse(text);
-                                throw new Error(json.error || `HTTP error ${response.status}`);
-                            } catch {
-                                throw new Error(`HTTP error ${response.status}: ${text}`);
-                            }
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Save response:', data);
-                    if (data.error) {
-                        showNotification(data.error, 'error');
-                        return;
-                    }
-
-                    showNotification(data.message || 'সফলভাবে সেভ হয়েছে', 'success');
-                    loadMealData();
-                })
-                .catch(error => {
-                    console.error('Error saving meal data:', error.message);
-                    showNotification(`সেভ করতে সমস্যা: ${error.message}`, 'error');
-                })
-                .finally(() => {
-                    saveBtn.disabled = false;
-                    saveBtn.innerHTML = '<i class="fas fa-save"></i> সেভ করুন';
-                });
-        }
-
-        // Show notification with queue
-        function showNotification(message, type = 'info') {
-            notificationQueue.push({ message, type });
-            processNotificationQueue();
-        }
-
-        function processNotificationQueue() {
-            if (isShowingNotification || !notificationQueue.length) return;
-            isShowingNotification = true;
-
-            const { message, type } = notificationQueue.shift();
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.setAttribute('role', 'alert');
-            notification.innerHTML = `
-                <div class="notification-icon">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-                </div>
-                <div class="notification-message">${message}</div>
-            `;
-
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.style.opacity = '1';
-                notification.style.transform = 'translateY(0)';
-            }, 10);
-
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                    isShowingNotification = false;
-                    processNotificationQueue();
-                }, 300);
-            }, 4000);
-        }
-
-        // Initialize and update meal distribution chart
-        let mealChart = null;
-
-        function initializeChart() {
-            const ctx = document.getElementById('mealDistributionChart')?.getContext('2d');
-            if (!ctx) return;
-
-            mealChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['সকালের নাস্তা', 'দুপুরের খাবার', 'রাতের খাবার'],
-                    datasets: [{
-                        label: 'মিল সংখ্যা',
-                        data: [0, 0, 0],
-                        backgroundColor: ['#6366f1', '#10b981', '#f59e0b'],
-                        borderColor: ['#4f46e5', '#059669', '#d97706'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'মিল সংখ্যা'
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    }
-                }
-            });
-        }
-
-        function updateChart(breakfastTotal, lunchTotal, dinnerTotal) {
-            if (mealChart) {
-                mealChart.data.datasets[0].data = [breakfastTotal, lunchTotal, dinnerTotal];
-                mealChart.update();
-            }
-        }
-    </script>
 @endsection
-

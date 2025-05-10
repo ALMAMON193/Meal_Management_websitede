@@ -39,12 +39,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/market/{id}', [MarketController::class, 'destroy']);
     Route::get('/market/stats', [MarketController::class, 'stats']);
 });
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/meals', [MealController::class, 'index'])->name('meal.list');
-    Route::post('/meals', [MealController::class, 'store'])->name('meals.store');
+    Route::get('/all-meal', [MealController::class, 'index'])->name('meal.list');
+    Route::post('/meals', [MealController::class, 'store'])->name('meal.store');
     Route::get('/meals/data', [MealController::class, 'getMealData'])->name('meals.data');
-});
-
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('roles', RoleController::class);

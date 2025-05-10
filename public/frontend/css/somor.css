@@ -1140,7 +1140,7 @@ input[type="radio"].d-none:checked ~ label {
   justify-content: space-between;
   align-items: flex-start;
   flex-shrink: 0;
-  background: var(--primary-color, #fb8c00);
+  background:  #977FF6;
 }
 .business_sidebar_top {
   display: flex;
