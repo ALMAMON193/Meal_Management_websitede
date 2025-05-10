@@ -15,6 +15,20 @@ use Illuminate\Support\Facades\Validator;
 
 class MealController extends Controller
 {
+    public function allIndex(Request $request)
+    {
+        $allmeals = Meal::whereYear('date', now()->year)
+                      ->whereMonth('date', now()->month)
+                      ->get();
+
+        //total meal this month
+        $totalMeals = $allmeals->sum('meal_count');
+        $totalMembers = User::where('role', '!=', 'manager')->count();
+        $averageMealRate = $totalMembers > 0 ? ($totalMeals / $totalMembers) * 100 : 0;
+        $averageMealRate = round($averageMealRate, 2);
+
+        return view('backend.layout.pages.all-meal', compact('allmeals','totalMeals','averageMealRate'));
+    }
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -43,37 +57,28 @@ class MealController extends Controller
 
         return view('backend.layout.pages.meal', compact('users', 'meals', 'totalMeals', 'averageMealRate', 'selectedDate'));
     }
+    // In your controller
+    public function store(Request $request)
+    {
+        $date = $request->input('date');
+        $meals = $request->input('meals');
 
-    // MealController.php
+        foreach ($meals as $userId => $mealData) {
+            $mealCount = array_sum($mealData);
 
-   public function store(Request $request)
-{
-    $validated = $request->validate([
-        'date' => 'required|date',
-        'meals' => 'required|array',
-        'meals.*.user_id' => 'required|exists:users,id',
-        'meals.*.breakfast' => 'required|numeric|min:0',
-        'meals.*.lunch' => 'required|numeric|min:0',
-        'meals.*.dinner' => 'required|numeric|min:0',
-    ]);
+            Meal::updateOrCreate(
+                [
+                    'user_id' => $userId,
+                    'date' => $date,
+                ],
+                [
+                    'meal_count' => $mealCount,
+                ]
+            );
+        }
 
-    foreach ($validated['meals'] as $mealData) {
-        Meal::updateOrCreate(
-            [
-                'user_id' => $mealData['user_id'],
-                'date' => $validated['date'],
-            ],
-            [
-                'breakfast' => $mealData['breakfast'],
-                'lunch' => $mealData['lunch'],
-                'dinner' => $mealData['dinner'],
-                'total' => $mealData['breakfast'] + $mealData['lunch'] + $mealData['dinner'],
-            ]
-        );
+        return redirect()->back();
     }
-
-    return back()->with('success', 'Meals saved successfully!');
-}
 
     public function getMealData(Request $request)
     {

@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->date('date');
-            $table->float('breakfast');
-            $table->float('lunch');
-            $table->float('dinner');
-            $table->float('total_meal');
+            $table->decimal('meal_count');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unique(['user_id', 'date']);
+
         });
     }
 
