@@ -7,19 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Meal extends Model
 {
 
-
     protected $fillable = [
         'user_id',
         'date',
-        'meal_count'
+        'breakfast',
+        'lunch',
+        'dinner'
     ];
 
     protected $casts = [
         'date' => 'date',
-        'meal_count' => 'decimal:1'
+        'breakfast' => 'float',
+        'lunch' => 'float',
+        'dinner' => 'float'
     ];
 
-   public function user(){
+     public function user()
+    {
         return $this->belongsTo(User::class);
-   }
+    }
+
+    public function mess()
+    {
+        return $this->belongsTo(Messe::class);
+    }
 }

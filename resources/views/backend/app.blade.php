@@ -33,10 +33,6 @@
         </div>
         <div id="black_overlay"></div>
     </main>
-
-    <!-- footer end  -->
-    <!-- footer end  -->
-
     <!-- ==== All Js Links ==== -->
     @include('backend.partials.script')
 </body>

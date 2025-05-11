@@ -18,11 +18,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['manager', 'member'])->default('member');
-            $table->unsignedBigInteger('manager_id')->nullable();
+            $table->unsignedBigInteger('messe_id')->nullable();
 
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('manager_id')->references('id')->on('users');
+           
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

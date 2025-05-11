@@ -16,7 +16,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'manager_id',
+        'messe_id',
     ];
 
     protected $hidden = [
@@ -32,21 +32,33 @@ class User extends Authenticatable
         ];
     }
 
-    // Relationship: A user belongs to a manager
-    public function manager()
+   public function mess()
     {
-        return $this->belongsTo(User::class, 'manager_id')->where('role', 'manager');
+        return $this->belongsTo(Messe::class);
     }
 
-    // Relationship: A manager has many members
-    public function managedMembers()
+    public function ownedMesses()
     {
-        return $this->hasMany(User::class, 'manager_id')->where('role', 'member');
+        return $this->hasMany(Messe::class, 'user_id');
     }
 
-    // Check if the user is a member
-    public function isMember()
+    public function bazaars()
     {
-        return $this->role === 'member';
+        return $this->hasMany(Market::class);
+    }
+
+    public function mealAttendances()
+    {
+        return $this->hasMany(Meal::class);
+    }
+
+    public function isManager()
+    {
+        return $this->role === 'manager';
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
     }
 }

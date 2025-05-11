@@ -17,18 +17,14 @@ class MemberController extends Controller
     {
         // Get the authenticated user (manager)
         $manager = Auth::user();
-        // Check if the user is a manager
+        //check if the ser is na manager and create an messe if the mess not create than create a messe
         if ($manager->role !== 'manager') {
-            return redirect()->back()->with('error', 'You are not authorized to view this page');
+            return view('backend.layout.pages.messe');
         }
-        // Fetch members managed by this manager
-        $members = $manager->managedMembers()->get();
-
-        // Always include the manager in the members collection
-        $members = $members->prepend($manager);
-
+        $members = User::all();
         // Pass members (including manager) to the view
         return view('backend.layout.pages.add-member', compact('members', 'manager'));
+    
     }
     public function addMember(Request $request)
     {
@@ -48,11 +44,6 @@ class MemberController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'member',
             'manager_id' => $manager->id
-        ]);
-        Member::create([
-            'user_id' => $manager->id,
-            'manager_id' => $manager->id,
-            'member_code' => 'MEM-' . Str::upper(Str::random(6))
         ]);
         return redirect()->back()->with('success', 'Member added successfully');
     }
