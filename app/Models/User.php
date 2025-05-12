@@ -16,7 +16,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'messe_id',
+        'mess_id',
     ];
 
     protected $hidden = [
@@ -32,17 +32,17 @@ class User extends Authenticatable
         ];
     }
 
-   public function mess()
+    public function mess()
     {
-        return $this->belongsTo(Messe::class);
+        return $this->hasOne(Mess::class, 'id', 'mess_id');
     }
 
     public function ownedMesses()
     {
-        return $this->hasMany(Messe::class, 'user_id');
+        return $this->hasMany(Mess::class, 'user_id');
     }
 
-    public function bazaars()
+    public function market()
     {
         return $this->hasMany(Market::class);
     }

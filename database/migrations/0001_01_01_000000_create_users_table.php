@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['manager', 'member'])->default('member');
-            $table->unsignedBigInteger('messe_id')->nullable();
+            $table->unsignedBigInteger('mess_id')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

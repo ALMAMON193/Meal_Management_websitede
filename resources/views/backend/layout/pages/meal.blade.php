@@ -7,6 +7,15 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <style>
+           :root {
+
+            --success-color: #4cc9f0;
+            --error-color: #f72585;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #6c757d;
+            --white: #ffffff;
+        }
         /* Base Styles */
         .business_layout_body {
             font-family: 'Nikosh', 'Hind Siliguri', 'Segoe UI', sans-serif;

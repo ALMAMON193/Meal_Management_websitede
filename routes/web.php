@@ -48,15 +48,9 @@ Route::group(['middleware' => ['auth', 'ensure.mess.created']], function () {
     Route::get('/yearly', [MealController::class, 'getYearlyData'])->name('meals.yearly');
 
     Route::get('/api/meals/data', [MealController::class, 'getMealData'])->name('meals.data');
-
-    Route::get('/mess', [MessController::class, 'index'])->name('mess.index');
-    Route::post('/mess/store', [MessController::class, 'storeMess'])->name('mess.store');
-    Route::post('/member/store', [MessController::class, 'storeMember'])->name('member.store');
-
     Route::resource('roles', RoleController::class);
 });
-
-
-
-
+  Route::get('/mess', [MessController::class, 'index'])->name('mess.index');
+    Route::post('/mess', [MessController::class, 'storeMess'])->name('mess.store');
+    Route::put('/mess/{id}', [MessController::class, 'update'])->name('mess.update');
 require __DIR__ . '/auth.php';

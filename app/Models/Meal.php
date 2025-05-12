@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Meal extends Model
 {
-
     protected $fillable = [
         'user_id',
+        'meal_id',
         'date',
         'breakfast',
         'lunch',
@@ -29,6 +29,6 @@ class Meal extends Model
 
     public function mess()
     {
-        return $this->belongsTo(Messe::class);
+        return $this->belongsTo(Mess::class);
     }
 }

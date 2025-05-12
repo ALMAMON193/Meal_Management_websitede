@@ -15,6 +15,6 @@ class Market extends Model
 
     public function mess()
     {
-        return $this->belongsTo(Messe::class);
+        return $this->belongsTo(Mess::class);
     }
 }

@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Messe extends Model
+class Mess extends Model
 {
     protected $guarded  = [];
-        public function manager()
+    public function manager()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -25,5 +25,10 @@ class Messe extends Model
     public function mealAttendances()
     {
         return $this->hasMany(Meal::class);
+    }
+
+    public function members()
+    {
+        return $this->hasMany(User::class, 'mess_id');
     }
 }

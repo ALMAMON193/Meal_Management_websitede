@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Meal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -20,12 +21,20 @@ class MealController extends Controller
         $user = Auth::user();
 
         // Check if the user is a manager
-        if ($user->role !== 'manager') {
+        if (!$user->isManager()) {
             return redirect()->back()->with('error', 'You are not authorized to view this page');
         }
 
-        // Fetch members managed by this manager, including the manager
-        $members = $user->managedMembers()->get()->prepend($user);
+        // Get all messes owned by this manager
+        $messes = $user->ownedMesses;
+
+        // Get all user IDs associated with these messes (including the manager)
+        $memberIds = $messes->flatMap(function ($mess) {
+            return $mess->users->pluck('id');
+        })->unique()->push($user->id);
+
+        // Get the members (users) including the manager
+        $members = User::whereIn('id', $memberIds)->get();
 
         // Get the selected date from the request, default to today
         $selectedDate = $request->input('date', now()->format('Y-m-d'));
@@ -61,44 +70,62 @@ class MealController extends Controller
         ));
     }
 
-    public function store(Request $request)
-    {
-        try {
-            $request->validate([
-                'date' => 'required|date|before_or_equal:today',
-                'meals' => 'required|array',
-                'meals.*.*' => 'nullable|numeric|min:0|max:9',
-            ]);
+public function store(Request $request)
+{
+    DB::beginTransaction();
+    
+    try {
+        // Validate request data
+        $validated = $request->validate([
+            'date' => 'required|date|before_or_equal:today',
+            'meals' => 'required|array',
+            'meals.*' => 'array:0,1,2', // Ensures structure: [breakfast, lunch, dinner]
+            'meals.*.*' => 'nullable|numeric|min:0|max:9',
+        ]);
 
-            $date = $request->input('date');
-            $savedMeals = [];
+        $date = $validated['date'];
+        $savedMeals = [];
 
-            foreach ($request->input('meals') as $userId => $meals) {
-                $breakfast = isset($meals[0]) ? (float)$meals[0] : 0;
-                $lunch = isset($meals[1]) ? (float)$meals[1] : 0;
-                $dinner = isset($meals[2]) ? (float)$meals[2] : 0;
-
-                $meal = Meal::updateOrCreate(
-                    ['user_id' => $userId, 'date' => $date],
-                    ['breakfast' => $breakfast, 'lunch' => $lunch, 'dinner' => $dinner]
-                );
-
-                $savedMeals[] = $meal;
+        foreach ($validated['meals'] as $userId => $meals) {
+            // Get the user with their mess relationship
+            $user = User::with('mess')->findOrFail($userId);
+            
+            // Verify user belongs to a mess
+            if (!$user->mess_id) {
+                throw new Exception("User {$userId} is not assigned to any mess");
             }
 
-            return response()->json([
-                'success' => true,
-                'message' => 'ডাটা সফলভাবে সংরক্ষিত হয়েছে!',
-                'meals' => $savedMeals
-            ]);
-        } catch (Exception $e) {
-            Log::error('Error saving meal data: ' . $e->getMessage());
-            return response()->json([
-                'success' => false,
-                'error' => 'ডাটা সংরক্ষণ করতে সমস্যা হয়েছে: ' . $e->getMessage()
-            ], 500);
+            $meal = Meal::updateOrCreate(
+                ['user_id' => $userId, 'date' => $date],
+                [
+                    'mess_id' => $user->mess_id, // Critical - provide mess_id
+                    'breakfast' => $meals[0] ?? 0,
+                    'lunch' => $meals[1] ?? 0,
+                    'dinner' => $meals[2] ?? 0
+                ]
+            );
+
+            $savedMeals[] = $meal;
         }
+
+        DB::commit();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ডাটা সফলভাবে সংরক্ষিত হয়েছে!',
+            'meals' => $savedMeals
+        ]);
+
+    } catch (Exception $e) {
+        DB::rollBack();
+        Log::error('Meal save error: ' . $e->getMessage());
+        
+        return response()->json([
+            'success' => false,
+            'error' => 'ডাটা সংরক্ষণ করতে সমস্যা হয়েছে: ' . $e->getMessage()
+        ], 500);
     }
+}
 
     public function getMealData(Request $request)
     {
@@ -152,7 +179,7 @@ class MealController extends Controller
         }
     }
     // Updated methods for monthly/yearly data
-   public function monthlyIndex(Request $request)
+    public function monthlyIndex(Request $request)
     {
         $selectedMonth = $request->input('month', now()->month);
         $year = now()->year;
@@ -232,7 +259,6 @@ class MealController extends Controller
             'days' => $days,
             'totalMeals' => $totalMeals,
             'perUserMeals' => $perUserMeals,
-     ]);
+        ]);
     }
-
 }
