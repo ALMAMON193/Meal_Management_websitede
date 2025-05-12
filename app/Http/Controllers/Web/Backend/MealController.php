@@ -11,11 +11,74 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class MealController extends Controller
 {
+<<<<<<< HEAD
+    public function allIndex(Request $request)
+{
+    // Get selected month and year from request or use current month/year
+    $selectedMonth = $request->input('month', now()->month);
+    $selectedYear = $request->input('year', now()->year);
+
+    // Create date object for the selected month
+    $selectedDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1);
+
+    // Get all meals for the selected month
+    $allmeals = Meal::whereYear('date', $selectedYear)
+                  ->whereMonth('date', $selectedMonth)
+                  ->orderBy('date', 'asc')
+                  ->get();
+
+    // Total meal this month
+    $totalMeals = $allmeals->sum('meal_count');
+
+    // Total members excluding managers
+    $totalMembers = User::where('role', '!=', 'manager')->count();
+
+    // Calculate average meal rate
+    $averageMealRate = $totalMembers > 0 ? ($totalMeals / $totalMembers) * 100 : 0;
+    $averageMealRate = round($averageMealRate, 2);
+
+    // Get all users for showing in chart
+    $users = User::where('role', '!=', 'manager')->get();
+
+    // Calculate meal counts per user for the selected month
+    $userMealCounts = [];
+    foreach ($users as $user) {
+        $userMeals = Meal::whereYear('date', $selectedYear)
+                      ->whereMonth('date', $selectedMonth)
+                      ->where('user_id', $user->id)
+                      ->sum('meal_count');
+
+        $userMealCounts[] = [
+            'name' => $user->name,
+            'meals' => $userMeals
+        ];
+    }
+
+    // For date filtering and limits
+    $currentMonth = now()->month;
+    $currentYear = now()->year;
+    $maxDate = Carbon::now()->format('Y-m-d');
+
+    return view('backend.layout.pages.all-meal', compact(
+        'allmeals',
+        'totalMeals',
+        'averageMealRate',
+        'selectedMonth',
+        'selectedYear',
+        'currentMonth',
+        'currentYear',
+        'maxDate',
+        'userMealCounts'
+    ));
+}
+=======
 
 
+>>>>>>> 90a3b70c5a23fbe29cd509bded00a588c0f43132
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -129,14 +192,20 @@ public function store(Request $request)
 
     public function getMealData(Request $request)
     {
-        try {
-            $date = $request->query('date', now()->toDateString());
-            $user = Auth::user();
+        $request->validate([
+            'date' => 'required|date'
+        ]);
 
-            if ($user->role !== 'manager') {
-                return response()->json(['error' => 'Unauthorized'], 403);
-            }
+        $date = $request->date;
 
+<<<<<<< HEAD
+        $meals = Meal::where('date', $date)->get();
+
+        return response()->json([
+            'success' => true,
+            'meals' => $meals
+        ]);
+=======
             $members = $user->managedMembers()->get()->prepend($user);
             $meals = Meal::where('date', $date)
                 ->whereIn('user_id', $members->pluck('id'))
@@ -177,6 +246,7 @@ public function store(Request $request)
             Log::error('Error in meals.data: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to load meal data'], 500);
         }
+>>>>>>> 90a3b70c5a23fbe29cd509bded00a588c0f43132
     }
     // Updated methods for monthly/yearly data
     public function monthlyIndex(Request $request)

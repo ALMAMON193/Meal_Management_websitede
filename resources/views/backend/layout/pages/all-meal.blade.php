@@ -584,6 +584,88 @@
         }
     </style>
 
+<<<<<<< HEAD
+    <div class="business_layout_body">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="dashboard-header-content">
+                <h2 class="dashboard-title">মিল উপস্থিতি ব্যবস্থাপনা</h2>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h4>আজকের মোট মিল</h4>
+                        <p id="total-meal-count">{{ $totalMeals }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>গড় মিল হার</h4>
+                        <p id="attendance-rate">{{ round($averageMealRate, 2) }}%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="meal-attendance-container" id="mealContainer">
+
+            <!-- Date Selector -->
+            <div class="date-selector">
+                <label for="month-year-selector" class="mr-2">মাস নির্বাচন:</label>
+                <input type="month" id="month-year-selector" name="month_year"
+                    value="{{ $selectedYear }}-{{ str_pad($selectedMonth, 2, '0', STR_PAD_LEFT) }}"
+                    max="{{ $currentYear }}-{{ str_pad($currentMonth, 2, '0', STR_PAD_LEFT) }}" class="form-control">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> ফিল্টার
+                    </button>
+                </div>
+            </div>
+
+            <!-- Meal Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h3><i class="fas fa-utensils"></i> মিল উপস্থিতি তালিকা</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>তারিখ</th>
+                                <th>সদস্য</th>
+                                <th>সকালের নাস্তা</th>
+                                <th>দুপুরের খাবার</th>
+                                <th>রাতের খাবার</th>
+                                <th>মোট</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($allmeals as $meal)
+                                <tr>
+                                    <td>{{ \Carbon\Carbon::parse($meal->date)->format('d/m/Y') }}</td>
+                                    <td>{{ $meal->user->name ?? 'অজানা' }}</td>
+                                    <td>{{ $meal->breakfast }}</td>
+                                    <td>{{ $meal->lunch }}</td>
+                                    <td>{{ $meal->dinner }}</td>
+                                    <td>{{ $meal->meal_count }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">কোন মিল পাওয়া যায়নি</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button type="button" class="reset-btn" onclick="resetForm()" aria-label="রিসেট করুন">
+                    <i class="fas fa-undo"></i> রিসেট করুন
+                </button>
+                <button class="save-btn" type="submit">
+                    <i class="fas fa-save"></i> সেভ করুন
+                </button>
+            </div>
+        </div>
+    </div>
+=======
     <div class="container mx-auto px-4 py-8">
         <!-- Month Selector -->
         <div class="month-selector glass-card">
@@ -1157,4 +1239,5 @@
             });
         });
     </script>
+>>>>>>> 90a3b70c5a23fbe29cd509bded00a588c0f43132
 @endsection
