@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('markets', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('messe_id');
             $table->date('bazaar_date');
             $table->text('item_details');
             $table->decimal('total_price', 10, 2);

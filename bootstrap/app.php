@@ -12,7 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'is.manager' => \App\Http\Middleware\IsManager::class
+            'is.manager' => \App\Http\Middleware\IsManager::class,
+            'ensure.mess.created' => \App\Http\Middleware\EnsureMessCreated::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

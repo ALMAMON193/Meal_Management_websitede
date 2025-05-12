@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Messe;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -31,21 +32,29 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'in:manager,member'],
+           
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role'=> $request->role
+            'role' => 'manager',
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
+        // If the user is a manager, check for mess existence
+        if ($user->role === 'manager') {
+            $mess = Messe::where('user_id', $user->id)->first();
+            if (!$mess) {
+                // Redirect to mess creation page
+                return redirect()->route('mess.create')->with('showModal', true);
+            }
+        }
 
         return redirect(route('dashboard', absolute: false));
     }
