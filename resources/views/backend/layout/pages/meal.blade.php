@@ -537,159 +537,157 @@
         }
     </style>
 
-<div class="business_layout_body">
-    <!-- Dashboard Header -->
-    <div class="dashboard-header">
-        <div class="dashboard-header-content">
-            <h2 class="dashboard-title">মিল উপস্থিতি ব্যবস্থাপনা</h2>
-            <div class="dashboard-stats">
-                <div class="stat-card">
-                    <h4>আজকের মোট মিল</h4>
-                    <p id="total-meal-count">{{ $totalMeals }}</p>
-                </div>
-                <div class="stat-card">
-                    <h4>গড় মিল হার</h4>
-                    <p id="attendance-rate">{{ round($averageMealRate, 2) }}%</p>
+    <div class="business_layout_body">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="dashboard-header-content">
+                <h2 class="dashboard-title">মিল উপস্থিতি ব্যবস্থাপনা</h2>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h4>আজকের মোট মিল</h4>
+                        <p id="total-meal-count">{{ $totalMeals }}</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>গড় মিল হার</h4>
+                        <p id="attendance-rate">{{ round($averageMealRate, 2) }}%</p>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <form method="POST" action="{{ route('meals.store') }}" class="meal-attendance-container" id="mealContainer">
+            @csrf
+            <!-- Date Selector -->
+            <div class="date-selector">
+                <label for="meal-date"><i class="fas fa-calendar-alt"></i> তারিখ নির্বাচন করুন:</label>
+                <input type="date" id="meal-date" name="date" value="{{ now()->toDateString() }}">
+            </div>
+
+            <!-- Meal Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h3><i class="fas fa-utensils"></i> মিল উপস্থিতি তালিকা</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="meal-table" id="mealTable">
+                        <thead>
+                            <tr>
+                                <th>সদস্য</th>
+                                <th>সকালের নাস্তা</th>
+                                <th>দুপুরের খাবার</th>
+                                <th>রাতের খাবার</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mealTableBody">
+                            @foreach ($members as $member)
+                                <tr data-user-id="{{ $member->id }}">
+                                    <td>
+                                        <div class="member-name">
+                                            <div class="member-avatar">{{ substr($member->name, 0, 1) }}</div>
+                                            {{ $member->name }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="meal-select breakfast"
+                                            name="meals[{{ $member->id }}][0]" min="0" max="9"
+                                            step="0.5" value="0" oninput="updateMeal({{ $member->id }})">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="meal-select lunch" name="meals[{{ $member->id }}][1]"
+                                            min="0" max="9" step="0.5" value="0"
+                                            oninput="updateMeal({{ $member->id }})">
+                                    </td>
+                                    <td>
+                                        <input type="number" class="meal-select dinner"
+                                            name="meals[{{ $member->id }}][2]" min="0" max="9"
+                                            step="0.5" value="0" oninput="updateMeal({{ $member->id }})">
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button type="button" class="reset-btn" onclick="resetForm()" aria-label="রিসেট করুন">
+                    <i class="fas fa-undo"></i> রিসেট করুন
+                </button>
+                <button class="save-btn" type="submit">
+                    <i class="fas fa-save"></i> সেভ করুন
+                </button>
+            </div>
+        </form>
     </div>
 
-    <form method="POST" action="{{ route('meals.store') }}" class="meal-attendance-container" id="mealContainer">
-        @csrf
-        <!-- Date Selector -->
-        <div class="date-selector">
-            <label for="meal-date"><i class="fas fa-calendar-alt"></i> তারিখ নির্বাচন করুন:</label>
-            <input type="date" id="meal-date" name="date" value="{{ now()->toDateString() }}">
-        </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Function to update total meal and status dynamically
+        function updateMeal(userId) {
+            const breakfast = parseFloat(document.querySelector(`input[name="meals[${userId}][0]"]`).value) || 0;
+            const lunch = parseFloat(document.querySelector(`input[name="meals[${userId}][1]"]`).value) || 0;
+            const dinner = parseFloat(document.querySelector(`input[name="meals[${userId}][2]"]`).value) || 0;
 
-        <!-- Meal Table -->
-        <div class="table-container">
-            <div class="table-header">
-                <h3><i class="fas fa-utensils"></i> মিল উপস্থিতি তালিকা</h3>
-            </div>
-            <div class="table-responsive">
-                <table class="meal-table" id="mealTable">
-                    <thead>
-                        <tr>
-                            <th>সদস্য</th>
-                            <th>সকালের নাস্তা</th>
-                            <th>দুপুরের খাবার</th>
-                            <th>রাতের খাবার</th>
-                        </tr>
-                    </thead>
-                    <tbody id="mealTableBody">
-                        @foreach ($members as $member)
-                            <tr data-user-id="{{ $member->id }}">
-                                <td>
-                                    <div class="member-name">
-                                        <div class="member-avatar">{{ substr($member->name, 0, 1) }}</div>
-                                        {{ $member->name }}
-                                    </div>
-                                </td>
-                                <td>
-                                    <input type="number" class="meal-select breakfast" name="meals[{{ $member->id }}][0]"
-                                           min="0" max="9" step="0.5" value="0"
-                                           oninput="updateMeal({{ $member->id }})">
-                                </td>
-                                <td>
-                                    <input type="number" class="meal-select lunch" name="meals[{{ $member->id }}][1]"
-                                           min="0" max="9" step="0.5" value="0"
-                                           oninput="updateMeal({{ $member->id }})">
-                                </td>
-                                <td>
-                                    <input type="number" class="meal-select dinner" name="meals[{{ $member->id }}][2]"
-                                           min="0" max="9" step="0.5" value="0"
-                                           oninput="updateMeal({{ $member->id }})">
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
+            // Calculate total meals
+            const totalMeals = (breakfast + lunch + dinner).toFixed(1);
+            document.getElementById(`total-meal-${userId}`).innerText = totalMeals;
 
-        <!-- Action Buttons -->
-        <div class="action-buttons">
-            <button type="button" class="reset-btn" onclick="resetForm()" aria-label="রিসেট করুন">
-                <i class="fas fa-undo"></i> রিসেট করুন
-            </button>
-            <button class="save-btn" type="submit">
-                <i class="fas fa-save"></i> সেভ করুন
-            </button>
-        </div>
-    </form>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    // Function to update total meal and status dynamically
-    function updateMeal(userId) {
-        const breakfast = parseFloat(document.querySelector(`input[name="meals[${userId}][0]"]`).value) || 0;
-        const lunch = parseFloat(document.querySelector(`input[name="meals[${userId}][1]"]`).value) || 0;
-        const dinner = parseFloat(document.querySelector(`input[name="meals[${userId}][2]"]`).value) || 0;
-
-        // Calculate total meals
-        const totalMeals = (breakfast + lunch + dinner).toFixed(1);
-        document.getElementById(`total-meal-${userId}`).innerText = totalMeals;
-
-        // Update status (Present or Absent)
-        const status = document.getElementById(`status-${userId}`);
-        if (totalMeals > 0) {
-            status.classList.remove('absent');
-            status.classList.add('present');
-            status.innerText = 'উপস্থিত';
-        } else {
-            status.classList.remove('present');
-            status.classList.add('absent');
-            status.innerText = 'অনুপস্থিত';
+            // Update status (Present or Absent)
+            const status = document.getElementById(`status-${userId}`);
+            if (totalMeals > 0) {
+                status.classList.remove('absent');
+                status.classList.add('present');
+                status.innerText = 'উপস্থিত';
+            } else {
+                status.classList.remove('present');
+                status.classList.add('absent');
+                status.innerText = 'অনুপস্থিত';
+            }
         }
-    }
 
-    // SweetAlert2 for success message
-    document.querySelector('.save-btn').addEventListener('click', function (event) {
-    event.preventDefault();
+        // SweetAlert2 for success message
+        document.querySelector('.save-btn').addEventListener('click', function(event) {
+            event.preventDefault();
 
-    const mealContainer = document.getElementById('mealContainer');
+            const mealContainer = document.getElementById('mealContainer');
 
-    // Ensure all input fields have values
-    document.querySelectorAll('.meal-select').forEach(input => {
-        if (input.value === '') {
-            input.value = '0'; // Default to 0 if empty
+            // Ensure all input fields have values
+            document.querySelectorAll('.meal-select').forEach(input => {
+                if (input.value === '') {
+                    input.value = '0'; // Default to 0 if empty
+                }
+            });
+
+            mealContainer.submit();
+
+            // Show SweetAlert success message (Toast)
+            Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title: 'ডাটা সফলভাবে সংরক্ষিত হয়েছে!',
+                showConfirmButton: false,
+                timer: 30000,
+                toast: true,
+                background: '#28a745',
+                color: '#fff'
+            });
+        });
+
+        // Reset Form Function
+        function resetForm() {
+            document.querySelectorAll('.meal-select').forEach(input => {
+                input.value = '0';
+            });
         }
-    });
 
-    // Submit the form via AJAX or normal submission (based on your requirement)
-    // Here, I'll assume normal submission:
-    mealContainer.submit();
-
-    // Show SweetAlert success message (Toast)
-    Swal.fire({
-        position: 'bottom-end',
-        icon: 'success',
-        title: 'ডাটা সফলভাবে সংরক্ষিত হয়েছে!', // 'Data has been saved successfully'
-        showConfirmButton: false,
-        timer: 3000,
-        toast: true,
-        background: '#28a745',
-        color: '#fff'
-    });
-});
-
-    // Reset Form Function
-    function resetForm() {
-        document.querySelectorAll('.meal-select').forEach(input => {
-            input.value = '0';
+        // Optional: Initialize DataTable (if needed)
+        $(document).ready(function() {
+            $('#mealTable').DataTable({
+                paging: false,
+                searching: false,
+                info: false,
+            });
         });
-    }
-
-    // Optional: Initialize DataTable (if needed)
-    $(document).ready(function() {
-        $('#mealTable').DataTable({
-            paging: false,
-            searching: false,
-            info: false,
-        });
-    });
-</script>
+    </script>
 @endsection

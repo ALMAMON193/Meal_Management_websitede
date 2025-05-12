@@ -16,19 +16,64 @@ use Illuminate\Support\Facades\Validator;
 class MealController extends Controller
 {
     public function allIndex(Request $request)
-    {
-        $allmeals = Meal::whereYear('date', now()->year)
-                      ->whereMonth('date', now()->month)
-                      ->get();
+{
+    // Get selected month and year from request or use current month/year
+    $selectedMonth = $request->input('month', now()->month);
+    $selectedYear = $request->input('year', now()->year);
 
-        //total meal this month
-        $totalMeals = $allmeals->sum('meal_count');
-        $totalMembers = User::where('role', '!=', 'manager')->count();
-        $averageMealRate = $totalMembers > 0 ? ($totalMeals / $totalMembers) * 100 : 0;
-        $averageMealRate = round($averageMealRate, 2);
+    // Create date object for the selected month
+    $selectedDate = Carbon::createFromDate($selectedYear, $selectedMonth, 1);
 
-        return view('backend.layout.pages.all-meal', compact('allmeals','totalMeals','averageMealRate'));
+    // Get all meals for the selected month
+    $allmeals = Meal::whereYear('date', $selectedYear)
+                  ->whereMonth('date', $selectedMonth)
+                  ->orderBy('date', 'asc')
+                  ->get();
+
+    // Total meal this month
+    $totalMeals = $allmeals->sum('meal_count');
+
+    // Total members excluding managers
+    $totalMembers = User::where('role', '!=', 'manager')->count();
+
+    // Calculate average meal rate
+    $averageMealRate = $totalMembers > 0 ? ($totalMeals / $totalMembers) * 100 : 0;
+    $averageMealRate = round($averageMealRate, 2);
+
+    // Get all users for showing in chart
+    $users = User::where('role', '!=', 'manager')->get();
+
+    // Calculate meal counts per user for the selected month
+    $userMealCounts = [];
+    foreach ($users as $user) {
+        $userMeals = Meal::whereYear('date', $selectedYear)
+                      ->whereMonth('date', $selectedMonth)
+                      ->where('user_id', $user->id)
+                      ->sum('meal_count');
+
+        $userMealCounts[] = [
+            'name' => $user->name,
+            'meals' => $userMeals
+        ];
     }
+
+    // For date filtering and limits
+    $currentMonth = now()->month;
+    $currentYear = now()->year;
+    $maxDate = Carbon::now()->format('Y-m-d');
+
+    return view('backend.layout.pages.all-meal', compact(
+        'allmeals',
+        'totalMeals',
+        'averageMealRate',
+        'selectedMonth',
+        'selectedYear',
+        'currentMonth',
+        'currentYear',
+        'maxDate',
+        'userMealCounts'
+    ));
+}
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -38,24 +83,24 @@ class MealController extends Controller
         }
 
         // Fetch members managed by this manager, including the manager
-        $users = $user->managedMembers()->get()->prepend($user);
+        $members = $user->managedMembers()->get()->prepend($user);
 
         // Get the selected date from the request, default to today
         $selectedDate = $request->input('date', now()->format('Y-m-d'));
 
         // Fetch meal data for the selected date
         $meals = Meal::where('date', $selectedDate)
-            ->whereIn('user_id', $users->pluck('id'))
+            ->whereIn('user_id', $members->pluck('id'))
             ->get()
             ->keyBy('user_id');
 
         // Calculate total meals and average meal rate
         $totalMeals = $meals->sum('meal_count');
-        $totalMembers = $users->count();
+        $totalMembers = $members->count();
         $averageMealRate = $totalMembers > 0 ? ($totalMeals / $totalMembers) * 100 : 0;
         $averageMealRate = round($averageMealRate, 2);
 
-        return view('backend.layout.pages.meal', compact('users', 'meals', 'totalMeals', 'averageMealRate', 'selectedDate'));
+        return view('backend.layout.pages.meal', compact('members', 'meals', 'totalMeals', 'averageMealRate', 'selectedDate'));
     }
     // In your controller
     public function store(Request $request)
