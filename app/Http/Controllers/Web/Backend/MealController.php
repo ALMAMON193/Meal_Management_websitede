@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class MealController extends Controller
 {
-<<<<<<< HEAD
     public function allIndex(Request $request)
 {
     // Get selected month and year from request or use current month/year
@@ -75,10 +74,6 @@ class MealController extends Controller
         'userMealCounts'
     ));
 }
-=======
-
-
->>>>>>> 90a3b70c5a23fbe29cd509bded00a588c0f43132
     public function index(Request $request)
     {
         $user = Auth::user();
@@ -198,55 +193,12 @@ public function store(Request $request)
 
         $date = $request->date;
 
-<<<<<<< HEAD
         $meals = Meal::where('date', $date)->get();
 
         return response()->json([
             'success' => true,
             'meals' => $meals
         ]);
-=======
-            $members = $user->managedMembers()->get()->prepend($user);
-            $meals = Meal::where('date', $date)
-                ->whereIn('user_id', $members->pluck('id'))
-                ->get()
-                ->keyBy('user_id');
-
-            $totalMeals = $meals->sum(function ($meal) {
-                return $meal->breakfast + $meal->lunch + $meal->dinner;
-            });
-
-            $presentCount = $meals->filter(function ($meal) {
-                return $meal->breakfast > 0 || $meal->lunch > 0 || $meal->dinner > 0;
-            })->count();
-
-            $totalMembers = $members->count();
-            $absentCount = $totalMembers - $presentCount;
-            $averageMealRate = $totalMembers > 0 ? ($presentCount / $totalMembers) * 100 : 0;
-
-            return response()->json([
-                'totalMeals' => $totalMeals,
-                'averageMealRate' => round($averageMealRate, 2),
-                'totalMembers' => $totalMembers,
-                'presentCount' => $presentCount,
-                'absentCount' => $absentCount,
-                'members' => $members->map(function ($member) {
-                    return ['id' => $member->id, 'name' => $member->name];
-                })->toArray(),
-                'meals' => $meals->mapWithKeys(function ($meal, $userId) {
-                    return [$userId => [
-                        'meal_count' => $meal->breakfast + $meal->lunch + $meal->dinner,
-                        'breakfast' => $meal->breakfast,
-                        'lunch' => $meal->lunch,
-                        'dinner' => $meal->dinner
-                    ]];
-                })->toArray()
-            ], 200);
-        } catch (Exception $e) {
-            Log::error('Error in meals.data: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to load meal data'], 500);
-        }
->>>>>>> 90a3b70c5a23fbe29cd509bded00a588c0f43132
     }
     // Updated methods for monthly/yearly data
     public function monthlyIndex(Request $request)
